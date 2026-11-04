@@ -1,7 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 
 export default function App() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
       
@@ -32,7 +35,13 @@ export default function App() {
             Iniciar sesión
           </h1>
 
-          <form className="flex flex-col flex-grow" onSubmit={(e) => e.preventDefault()}>
+          <form
+            className="flex flex-col flex-grow"
+            onSubmit={(e) => {
+              e.preventDefault();
+              router.push('/feed');
+            }}
+          >
             
             <div className="mb-5">
               <label className="block text-gray-700 text-sm mb-2 ml-2">
@@ -64,7 +73,6 @@ export default function App() {
                 Entrar
               </button>
             </div>
-
 
             <div className="text-center mt-2">
               <p className="text-gray-500 text-sm">
