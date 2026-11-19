@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function App() {
@@ -77,9 +78,9 @@ export default function App() {
             <div className="text-center mt-2">
               <p className="text-gray-500 text-sm">
                 ¿Aun no tienes cuenta?{' '}
-                <a href="#" className="text-[#2d4059] font-semibold hover:underline">
+                <Link href="/registro" className="text-[#2d4059] font-semibold hover:underline">
                   Regístrate
-                </a>
+                </Link>
               </p>
             </div>
 

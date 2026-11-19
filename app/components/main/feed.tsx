@@ -1,35 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { CATEGORIAS as CATEGORIAS_PRODUCTO } from '../../lib/data';
+import { useStore } from '../../lib/store';
+import BottomNav from '../ui/bottomNav';
+import ProductImage from '../ui/productImage';
 
-type Producto = {
-  id: number;
-  nombre: string;
-  precio: number;
-  categoria: string;
-  imagen?: string; // ruta en /public, por ejemplo "/images/takis.png"
-};
-
-// Datos de ejemplo: más adelante vendrán de tu base de datos / API
-const PRODUCTOS: Producto[] = [
-  { id: 1, nombre: 'Takis 240g', precio: 15, categoria: 'Papas' },
-  { id: 2, nombre: 'Ruffles', precio: 20, categoria: 'Papas' },
-  { id: 3, nombre: 'Chidas Jalapeño', precio: 25, categoria: 'Papas' },
-  { id: 4, nombre: 'Chidas Adobadas', precio: 25, categoria: 'Papas' },
-  { id: 5, nombre: 'Coca-Cola 600ml', precio: 25, categoria: 'Bebidas' },
-  { id: 6, nombre: 'Emperador Chocolate', precio: 18, categoria: 'Galletas' },
-  { id: 7, nombre: 'Panditas', precio: 12, categoria: 'Gomitas' },
-  { id: 8, nombre: 'Mazapán De la Rosa', precio: 8, categoria: 'Dulces' },
-];
-
-const CATEGORIAS = ['Todo', 'Papas', 'Galletas', 'Gomitas', 'Bebidas', 'Dulces'];
+const CATEGORIAS = ['Todo', ...CATEGORIAS_PRODUCTO];
 
 export default function Feed() {
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('Todo');
+  const { productos } = useStore();
 
-  const productosFiltrados = PRODUCTOS.filter((p) => {
+  // Solo se muestran las publicaciones que siguen disponibles.
+  const productosFiltrados = productos.filter((p) => !p.vendido).filter((p) => {
     const coincideCategoria = categoria === 'Todo' || p.categoria === categoria;
     const coincideBusqueda = p.nombre
       .toLowerCase()
@@ -115,15 +102,8 @@ export default function Feed() {
                     href={`/producto/${p.id}`}
                     className="block rounded-2xl border border-gray-200 bg-white overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#fbb040] active:scale-[0.98] transition-transform"
                   >
-                    <div className="aspect-[4/3] bg-[#fdebc8] flex items-center justify-center">
-                      {p.imagen && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={p.imagen}
-                          alt={p.nombre}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
+                    <div className="aspect-[4/3] bg-[#fdebc8] flex items-center justify-center overflow-hidden">
+                      <ProductImage producto={p} iconSize={64} />
                     </div>
                     <div className="px-3 py-2.5">
                       <p className="text-[#2d4059] text-sm font-medium leading-tight truncate">
@@ -136,51 +116,17 @@ export default function Feed() {
               ))}
             </ul>
           ) : (
-            <div className="text-center text-gray-500 text-sm mt-16 px-6">
-              <p className="font-medium text-[#2d4059] mb-1">
-                No encontramos productos
+            <div className="flex flex-col items-center text-center text-[#939393] text-lg mt-20 px-10">
+              <Image src="/icons/sad.png" alt="" width={90} height={90} />
+              <p className="mt-4">
+                No encontramos productos. Prueba con otra búsqueda o categoría
               </p>
-              <p>Prueba con otra palabra o elige otra categoría.</p>
             </div>
           )}
         </main>
 
         {/* BARRA INFERIOR */}
-        <nav
-          className="absolute bottom-0 inset-x-0 bg-[#1b364c] rounded-t-[36px] h-24 px-10 flex items-center justify-between"
-          aria-label="Navegación principal"
-        >
-          <Link
-            href="/feed"
-            aria-label="Inicio"
-            className="p-2 text-white/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#fbb040] rounded-full"
-          >
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 3l9 8h-2.5v9h-4.5v-6h-4v6H5.5v-9H3l9-8z" />
-            </svg>
-          </Link>
-
-          <Link
-            href="/vender"
-            aria-label="Publicar producto"
-            className="-mt-8 w-16 h-16 rounded-full bg-[#fbb040] hover:bg-[#f5a123] shadow-lg flex items-center justify-center text-[#1b364c] active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-white"
-          >
-            <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true">
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-          </Link>
-
-          <Link
-            href="/perfil"
-            aria-label="Mi perfil"
-            className="p-2 text-white/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#fbb040] rounded-full"
-          >
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <circle cx="12" cy="8" r="4.5" />
-              <path d="M3.5 21c0-4.6 3.8-7.5 8.5-7.5s8.5 2.9 8.5 7.5H3.5z" />
-            </svg>
-          </Link>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   );

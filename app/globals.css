@@ -12,6 +12,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Colores del diseño de FIF Store (Figma) */
+@theme {
+  --color-fif-navy: #163850;
+  --color-fif-orange: #feb63f;
+  --color-fif-orange-hover: #f5a123;
+  --color-fif-cream: #feebcb;
+  --color-fif-field: #f3f3f3;
+  --color-fif-input: #d9d9d9;
+  --color-fif-border: #d4d4d4;
+  --color-fif-muted: #939393;
+  --color-fif-danger: #c90000;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
