@@ -15,13 +15,16 @@ import {
 } from '../../lib/store';
 import Avatar from '../ui/avatar';
 import ConfirmDialog from '../ui/confirmDialog';
+import ImageCarousel from '../ui/imageCarousel';
 import PhoneShell from '../ui/phoneShell';
-import ProductImage from '../ui/productImage';
 import TopBar from '../ui/topBar';
 
 export default function ProductDetail({ id }: { id: number }) {
   const { productos, usuarios, favoritos } = useStore();
   const hidratado = useHidratado();
+  // Los hooks van antes de cualquier return: si la publicación aparece después de
+  // sincronizar con la API, React necesita el mismo número de hooks en cada render.
+  const usuarioActual = useUsuarioActual();
   const producto = productos.find((p) => p.id === id);
 
   if (!producto) {
@@ -45,8 +48,6 @@ export default function ProductDetail({ id }: { id: number }) {
   }
 
   const vendedor = usuarios.find((u) => u.id === producto.vendedorId);
-
-  const usuarioActual = useUsuarioActual();
 
   if (producto.vendedorId === usuarioActual.id) {
     return <VistaDueno producto={producto} vendedor={vendedor} />;
@@ -109,9 +110,7 @@ function VistaComprador({
       <TopBar titulo="Detalles" accion={botonFavorito} />
 
       <main className="flex-grow overflow-y-auto pb-8">
-        <div className="bg-fif-cream h-[300px] flex items-center justify-center overflow-hidden">
-          <ProductImage producto={producto} iconSize={119} />
-        </div>
+        <ImageCarousel key={producto.id} producto={producto} iconSize={119} className="bg-fif-cream h-[300px]" />
 
         <div className="px-9 pt-8">
           <div className="flex items-center justify-between gap-4">
@@ -175,9 +174,7 @@ function VistaDueno({ producto, vendedor }: { producto: Producto; vendedor?: Usu
       <TopBar titulo="Detalle" fallbackHref="/perfil" />
 
       <main className="flex-grow overflow-y-auto pb-8">
-        <div className="bg-fif-cream h-[236px] flex items-center justify-center overflow-hidden">
-          <ProductImage producto={producto} iconSize={90} />
-        </div>
+        <ImageCarousel key={producto.id} producto={producto} iconSize={90} className="bg-fif-cream h-[236px]" />
 
         <div className="px-7 pt-5">
           <div className="flex items-center justify-between gap-4">
