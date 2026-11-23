@@ -18,7 +18,9 @@ type Estado = {
   usuarioActualId: string;
 };
 
-const CLAVE = 'fif-store-v2';
+// v3: las imágenes pasaron de Unsplash a public/images/productos; la clave nueva
+// evita que el navegador muestre las URLs viejas guardadas en caché.
+const CLAVE = 'fif-store-v3';
 
 const ESTADO_INICIAL: Estado = {
   productos: PRODUCTOS_INICIALES,

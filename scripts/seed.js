@@ -113,8 +113,8 @@ const insertUser = db.prepare(`
 usuarios.forEach((u) => insertUser.run(u));
 console.log(`✓ Insertados ${usuarios.length} usuarios iniciales.`);
 
-// 3. Catálogo de 100 Productos con Imágenes Web de alta calidad
-const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=600&q=80`;
+// 3. Catálogo de 100 productos. Imágenes locales en public/images/productos
+//    (fuentes y licencias en CREDITOS_IMAGENES.md)
 
 const rawProductos = [
   // ==================== PAPAS (17 productos) ====================
@@ -125,7 +125,7 @@ const rawProductos = [
     descripcion: 'Bolsa grande de Takis Fuego, totalmente cerrada. Entrego en edificio C o biblioteca.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1621447504864-d8686e12698c'),
+    img: '/images/productos/001-takis-fuego-240g.jpg',
   },
   {
     nombre: 'Ruffles Queso 185g',
@@ -134,7 +134,7 @@ const rawProductos = [
     descripcion: 'Ruffles sabor a queso, crujientes y frescas. Entrego en la entrada de la FIF.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1566478989037-eec170784d0b'),
+    img: '/images/productos/002-ruffles-queso-185g.jpg',
   },
   {
     nombre: 'Doritos Nacho 245g',
@@ -143,7 +143,7 @@ const rawProductos = [
     descripcion: 'Bolsa rendidora de Doritos Nacho. Ideales para la botana entre clases.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1513456852971-30c0b8199d4d'),
+    img: '/images/productos/003-doritos-nacho-245g.jpg',
   },
   {
     nombre: 'Chidas Jalapeño',
@@ -152,7 +152,7 @@ const rawProductos = [
     descripcion: 'Papas Chidas sabor jalapeño bien picositas. Paquete nuevo.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1613919113640-25732ec5e61f'),
+    img: '/images/productos/004-chidas-jalapeno.jpg',
   },
   {
     nombre: 'Chidas Adobadas 250g',
@@ -161,7 +161,7 @@ const rawProductos = [
     descripcion: 'Chidas sabor adobo de 250g, recién compradas en mayoreo.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1585238342024-78d387f4a707'),
+    img: '/images/productos/005-chidas-adobadas-250g.jpg',
   },
   {
     nombre: 'Cheetos Torciditos 150g',
@@ -170,7 +170,7 @@ const rawProductos = [
     descripcion: 'Cheetos sabor queso y chile torciditos. Vendo en laboratorio de cómputo.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1599490659213-e2b9527bd087'),
+    img: '/images/productos/006-cheetos-torciditos-150g.jpg',
   },
   {
     nombre: 'Cheetos Flamin Hot 160g',
@@ -179,7 +179,7 @@ const rawProductos = [
     descripcion: 'Cheetos Flamin Hot con extra picante. Tengo 3 bolsas disponibles.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1621447504864-d8686e12698c'),
+    img: '/images/productos/007-cheetos-flamin-hot-160g.jpg',
   },
   {
     nombre: 'Sabritas Sal Clásicas 170g',
@@ -188,7 +188,7 @@ const rawProductos = [
     descripcion: 'Las clásicas papas Sabritas amarillas con sal. Perfectas con salsa y limón.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1566478989037-eec170784d0b'),
+    img: '/images/productos/008-sabritas-sal-clasicas-170g.jpg',
   },
   {
     nombre: 'Sabritas Crema y Especias',
@@ -197,7 +197,7 @@ const rawProductos = [
     descripcion: 'Papas fritas sabor crema y especias, bolsa mediana.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1600952841320-db92ec4047ca'),
+    img: '/images/productos/009-sabritas-crema-y-especias.jpg',
   },
   {
     nombre: 'Chips Fuego Barcel 170g',
@@ -206,7 +206,7 @@ const rawProductos = [
     descripcion: 'Chips artesanales Barcel corte grueso sabor fuego.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1613919113640-25732ec5e61f'),
+    img: '/images/productos/010-chips-fuego-barcel-170g.jpg',
   },
   {
     nombre: 'Chips Jalapeño Barcel 170g',
@@ -215,7 +215,7 @@ const rawProductos = [
     descripcion: 'Chips Barcel con chile jalapeño auténtico. Muy crujientes.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1585238342024-78d387f4a707'),
+    img: '/images/productos/011-chips-jalapeno-barcel-170g.jpg',
   },
   {
     nombre: 'Papas Caseras con Salsa y Limón',
@@ -224,7 +224,7 @@ const rawProductos = [
     descripcion: 'Papas naturales fritas hechas en casa hoy en la mañana, incluye salsa Botanera.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1576107232684-1279f3908594'),
+    img: '/images/productos/012-papas-caseras-con-salsa-y-limon.jpg',
   },
   {
     nombre: 'Doritos Dinamita Chile y Limón',
@@ -233,7 +233,7 @@ const rawProductos = [
     descripcion: 'Totopos enrollados súper crujientes con limón y chile.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1527842891421-42eec6e703ea'),
+    img: '/images/productos/013-doritos-dinamita-chile-y-limon.jpg',
   },
   {
     nombre: 'Runners Barcel 180g',
@@ -242,7 +242,7 @@ const rawProductos = [
     descripcion: 'Botana de maíz en forma de coche con salsa picante.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1621447504864-d8686e12698c'),
+    img: '/images/productos/014-runners-barcel-180g.jpg',
   },
   {
     nombre: 'Papas Pringles Original 124g',
@@ -251,7 +251,7 @@ const rawProductos = [
     descripcion: 'Tubo de Pringles Original clásico cerrado sellado.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1576107232684-1279f3908594'),
+    img: '/images/productos/015-papas-pringles-original-124g.jpg',
   },
   {
     nombre: 'Papas Pringles Sour Cream & Onion',
@@ -260,7 +260,7 @@ const rawProductos = [
     descripcion: 'Tubo de Pringles crema y cebolla, recién importado.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1600952841320-db92ec4047ca'),
+    img: '/images/productos/016-papas-pringles-sour-cream-y-onion.jpg',
   },
   {
     nombre: 'Tostitos Salsa Verde 240g',
@@ -269,7 +269,7 @@ const rawProductos = [
     descripcion: 'Tostitos con toque de salsa verde, listos para preparar con cueritos.',
     vendedor_id: 'u1',
     vendido: 1,
-    img: unsplash('photo-1513456852971-30c0b8199d4d'),
+    img: '/images/productos/017-tostitos-salsa-verde-240g.jpg',
   },
 
   // ==================== GALLETAS (17 productos) ====================
@@ -280,7 +280,7 @@ const rawProductos = [
     descripcion: 'Paquete de galletas Emperador con relleno sabor chocolate.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1563729784474-d77dbb933a9e'),
+    img: '/images/productos/018-emperador-chocolate-101g.jpg',
   },
   {
     nombre: 'Emperador Limón 101g',
@@ -289,7 +289,7 @@ const rawProductos = [
     descripcion: 'Galletas tipo sándwich con relleno ácido y dulce sabor a limón.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1557082673-e847a95781a7'),
+    img: '/images/productos/019-emperador-limon-101g.jpg',
   },
   {
     nombre: 'Emperador Combinado 101g',
@@ -298,7 +298,7 @@ const rawProductos = [
     descripcion: 'Emperador mitad vainilla y mitad chocolate.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1563729784474-d77dbb933a9e'),
+    img: '/images/productos/020-emperador-combinado-101g.jpg',
   },
   {
     nombre: 'Chokis Clásicas 84g',
@@ -307,7 +307,7 @@ const rawProductos = [
     descripcion: 'Galletas con chispas sabor a chocolate que se deshacen en la boca.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1499636136210-6f4ee915583e'),
+    img: '/images/productos/021-chokis-clasicas-84g.jpg',
   },
   {
     nombre: 'Chokis Brownie 76g',
@@ -316,7 +316,7 @@ const rawProductos = [
     descripcion: 'Galletas Chokis rellenas de suave crema de brownie.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1606313564200-e75d5e30476c'),
+    img: '/images/productos/022-chokis-brownie-76g.jpg',
   },
   {
     nombre: 'Oreo Original 114g',
@@ -325,7 +325,7 @@ const rawProductos = [
     descripcion: 'Paquete de 10 galletas Oreo con su clásica crema de vainilla.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1563729784474-d77dbb933a9e'),
+    img: '/images/productos/023-oreo-original-114g.jpg',
   },
   {
     nombre: 'Oreo Doble Crema 120g',
@@ -334,7 +334,7 @@ const rawProductos = [
     descripcion: 'Oreo con el doble de crema dulce. Paquete individual.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1563729784474-d77dbb933a9e'),
+    img: '/images/productos/024-oreo-doble-crema-120g.jpg',
   },
   {
     nombre: 'Brownies Caseros con Nuez',
@@ -343,7 +343,7 @@ const rawProductos = [
     descripcion: 'Brownies artesanales horneados esta mañana con chocolate amargo y nuez.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1606313564200-e75d5e30476c'),
+    img: '/images/productos/025-brownies-caseros-con-nuez.jpg',
   },
   {
     nombre: 'Canelitas Gamesa 120g',
@@ -352,7 +352,7 @@ const rawProductos = [
     descripcion: 'Galletas crujientes con canela y azúcar espolvoreada.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1558961363-fa8fdf82db35'),
+    img: '/images/productos/026-canelitas-gamesa-120g.jpg',
   },
   {
     nombre: 'Polvorones Naranja Gamesa 113g',
@@ -361,7 +361,7 @@ const rawProductos = [
     descripcion: 'Polvorones tradicionales con sabor a naranja.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1557082673-e847a95781a7'),
+    img: '/images/productos/027-polvorones-naranja-gamesa-113g.jpg',
   },
   {
     nombre: 'Galletas Marías Gamesa 170g',
@@ -370,7 +370,7 @@ const rawProductos = [
     descripcion: 'Rollo de galletas Marías ideales para acompañar con café o té.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1509440159596-0249088772ff'),
+    img: '/images/productos/028-galletas-marias-gamesa-170g.jpg',
   },
   {
     nombre: 'Príncipe Marinela Chocolate 106g',
@@ -379,7 +379,7 @@ const rawProductos = [
     descripcion: 'Galletas rellenas de abundante chocolate suave.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1584308666744-24d5c474f2ae'),
+    img: '/images/productos/029-principe-marinela-chocolate-106g.jpg',
   },
   {
     nombre: 'Barritas Marinela Fresa 75g',
@@ -388,7 +388,7 @@ const rawProductos = [
     descripcion: 'Dos barritas horneadas con relleno dulce de mermelada de fresa.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1551024709-8f23befc6f87'),
+    img: '/images/productos/030-barritas-marinela-fresa-75g.jpg',
   },
   {
     nombre: 'Barritas Marinela Piña 75g',
@@ -397,7 +397,7 @@ const rawProductos = [
     descripcion: 'Dos barritas con dulce relleno de piña y masa suave.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1551024709-8f23befc6f87'),
+    img: '/images/productos/031-barritas-marinela-pina-75g.jpg',
   },
   {
     nombre: 'Triki Trakes Marinela 86g',
@@ -406,7 +406,7 @@ const rawProductos = [
     descripcion: 'Galletas con chispas crujientes de chocolate.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1499636136210-6f4ee915583e'),
+    img: '/images/productos/032-triki-trakes-marinela-86g.jpg',
   },
   {
     nombre: 'Galletas Piruetas Gamesa 100g',
@@ -415,7 +415,7 @@ const rawProductos = [
     descripcion: 'Galletas sándwich rellenas de crema con sabor a limón.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1557082673-e847a95781a7'),
+    img: '/images/productos/033-galletas-piruetas-gamesa-100g.jpg',
   },
   {
     nombre: 'Wafers Vainilla Bauducco 140g',
@@ -424,7 +424,7 @@ const rawProductos = [
     descripcion: 'Obleas crujientes con tres capas de relleno sabor vainilla.',
     vendedor_id: 'u3',
     vendido: 1,
-    img: unsplash('photo-1590080875515-8a3a8dc5735e'),
+    img: '/images/productos/034-wafers-vainilla-bauducco-140g.jpg',
   },
 
   // ==================== GOMITAS (17 productos) ====================
@@ -435,7 +435,7 @@ const rawProductos = [
     descripcion: 'Gomitas en forma de osito con sabores frutales clásicos.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1582058091505-f87a2e55a40f'),
+    img: '/images/productos/035-panditas-clasicos-ricolino-65g.jpg',
   },
   {
     nombre: 'Panditas Enchilados 65g',
@@ -444,7 +444,7 @@ const rawProductos = [
     descripcion: 'Ositos de gomita cubiertos de chile en polvo agridulce.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/036-panditas-enchilados-65g.jpg',
   },
   {
     nombre: 'Gusanos Ácidos Trolli 100g',
@@ -453,7 +453,7 @@ const rawProductos = [
     descripcion: 'Gusanitos bicolor con cubierta ácida súper intensa.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1581798459219-318e76aecc7b'),
+    img: '/images/productos/037-gusanos-acidos-trolli-100g.jpg',
   },
   {
     nombre: 'Gomitas Enchiladas de Mango',
@@ -462,7 +462,7 @@ const rawProductos = [
     descripcion: 'Rebanadas de gomita sabor mango con chamoy y chile miguelito casero.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/038-gomitas-enchiladas-de-mango.jpg',
   },
   {
     nombre: 'Aros de Durazno Ácidos 90g',
@@ -471,7 +471,7 @@ const rawProductos = [
     descripcion: 'Aros de gomita sabor durazno azucarados.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1572097662444-0bab80029b98'),
+    img: '/images/productos/039-aros-de-durazno-acidos-90g.jpg',
   },
   {
     nombre: 'Skwinkles Salsagheti Sandía',
@@ -480,7 +480,7 @@ const rawProductos = [
     descripcion: 'Tiras de caramelo suave sabor sandía con salsa líquida sabor tamarindo Gusano.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1581798459219-318e76aecc7b'),
+    img: '/images/productos/040-skwinkles-salsagheti-sandia.jpg',
   },
   {
     nombre: 'Skwinkles Rellenos Piña 26g',
@@ -489,7 +489,7 @@ const rawProductos = [
     descripcion: 'Tubitos de gomita sabor piña rellenos de tamarindo con chile.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1575224300306-1b8da36134ec'),
+    img: '/images/productos/041-skwinkles-rellenos-pina-26g.jpg',
   },
   {
     nombre: 'Skwinkles Clásicos Tamarindo',
@@ -498,7 +498,7 @@ const rawProductos = [
     descripcion: 'Tiras enchiladas sabor tamarindo con sobre de salsa picante.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/042-skwinkles-clasicos-tamarindo.jpg',
   },
   {
     nombre: 'Gomitas Dientes Trolli 80g',
@@ -507,7 +507,7 @@ const rawProductos = [
     descripcion: 'Divertidas gomitas con forma de dentadura sabor fresa y nata.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1572097662444-0bab80029b98'),
+    img: '/images/productos/043-gomitas-dientes-trolli-80g.jpg',
   },
   {
     nombre: 'Gomitas Moras Silvestres 90g',
@@ -516,7 +516,7 @@ const rawProductos = [
     descripcion: 'Gomitas cubiertas de bolitas crujientes sabor mora roja y negra.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1575224300306-1b8da36134ec'),
+    img: '/images/productos/044-gomitas-moras-silvestres-90g.jpg',
   },
   {
     nombre: 'Gomitas Frutitas Agridulces 100g',
@@ -525,7 +525,7 @@ const rawProductos = [
     descripcion: 'Plátanos, fresas y manzanas de gomita con toque acidito.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1572097662444-0bab80029b98'),
+    img: '/images/productos/045-gomitas-frutitas-agridulces-100g.jpg',
   },
   {
     nombre: 'Gomitas Sandía con Chile 100g',
@@ -534,7 +534,7 @@ const rawProductos = [
     descripcion: 'Gomitas triangulares sabor sandía espolvoreadas con tajín.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/046-gomitas-sandia-con-chile-100g.jpg',
   },
   {
     nombre: 'Gomitas Tiburones Azules Trolli',
@@ -543,7 +543,7 @@ const rawProductos = [
     descripcion: 'Tiburones de gomita sabor moras y crema.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1582058091505-f87a2e55a40f'),
+    img: '/images/productos/047-gomitas-tiburones-azules-trolli.jpg',
   },
   {
     nombre: 'Gomitas Hamburguesa Trolli',
@@ -552,7 +552,7 @@ const rawProductos = [
     descripcion: 'Mini hamburguesa de varias capas de gomitas frutales.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1575224300306-1b8da36134ec'),
+    img: '/images/productos/048-gomitas-hamburguesa-trolli.jpg',
   },
   {
     nombre: 'Gomitas Pulpos Ácidos 90g',
@@ -561,7 +561,7 @@ const rawProductos = [
     descripcion: 'Pulpitos de gomita de varios tentáculos bien ácidos.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1581798459219-318e76aecc7b'),
+    img: '/images/productos/049-gomitas-pulpos-acidos-90g.jpg',
   },
   {
     nombre: 'Gomitas Cerezas Gemelas 90g',
@@ -570,7 +570,7 @@ const rawProductos = [
     descripcion: 'Cerezas de gomita con tallo verde sabor cereza dulce.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1572097662444-0bab80029b98'),
+    img: '/images/productos/050-gomitas-cerezas-gemelas-90g.jpg',
   },
   {
     nombre: 'Gomitas Fritas Botana Mix 120g',
@@ -579,7 +579,7 @@ const rawProductos = [
     descripcion: 'Mix de gomitas variadas preparadas con salsa valentina y chamoy casero.',
     vendedor_id: 'u1',
     vendido: 1,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/051-gomitas-fritas-botana-mix-120g.jpg',
   },
 
   // ==================== BEBIDAS (17 productos) ====================
@@ -590,7 +590,7 @@ const rawProductos = [
     descripcion: 'Botella de Coca-Cola original bien helada. Entrego en salón C02 o terraza.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1622483767028-3f66f32aef97'),
+    img: '/images/productos/052-coca-cola-600ml-fria.jpg',
   },
   {
     nombre: 'Coca-Cola Sin Azúcar 600ml',
@@ -599,7 +599,7 @@ const rawProductos = [
     descripcion: 'Coca-Cola Zero azúcar 600ml bien fría.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1554866585-cd94860890b7'),
+    img: '/images/productos/053-coca-cola-sin-azucar-600ml.png',
   },
   {
     nombre: 'Red Bull Energy Drink 250ml',
@@ -608,7 +608,7 @@ const rawProductos = [
     descripcion: 'Lata de Red Bull helada para sobrevivir a la semana de exámenes.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1622543925917-763c34d1a86e'),
+    img: '/images/productos/054-red-bull-energy-drink-250ml.jpg',
   },
   {
     nombre: 'Monster Energy Mango Loco 473ml',
@@ -617,7 +617,7 @@ const rawProductos = [
     descripcion: 'Lata grande de Monster Juice sabor Mango Loco frío.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1622543925917-763c34d1a86e'),
+    img: '/images/productos/055-monster-energy-mango-loco-473ml.jpg',
   },
   {
     nombre: 'Monster Energy Ultra White 473ml',
@@ -626,7 +626,7 @@ const rawProductos = [
     descripcion: 'Monster Ultra sin azúcar sabor cítrico bien helado.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1622543925917-763c34d1a86e'),
+    img: '/images/productos/056-monster-energy-ultra-white-473ml.jpg',
   },
   {
     nombre: 'Arizona Green Tea con Miel 680ml',
@@ -635,7 +635,7 @@ const rawProductos = [
     descripcion: 'Lata grande de té verde Arizona con miel y ginseng. Bien fría.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1556679343-c7306c1976bc'),
+    img: '/images/productos/057-arizona-green-tea-con-miel-680ml.jpg',
   },
   {
     nombre: 'Arizona Sandia Mucho Mango 680ml',
@@ -644,7 +644,7 @@ const rawProductos = [
     descripcion: 'Lata de Arizona sabor Mucho Mango, refrescante para la tarde.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1556679343-c7306c1976bc'),
+    img: '/images/productos/058-arizona-sandia-mucho-mango-680ml.jpg',
   },
   {
     nombre: 'Boing de Guayaba 500ml',
@@ -653,7 +653,7 @@ const rawProductos = [
     descripcion: 'Jugo Boing en envase de vidrio frío, el favorito de la cafetería.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1600271886742-f049cd451bba'),
+    img: '/images/productos/059-boing-de-guayaba-500ml.jpg',
   },
   {
     nombre: 'Boing de Mango 500ml',
@@ -662,7 +662,7 @@ const rawProductos = [
     descripcion: 'Boing de pulpa de mango natural en vidrio, bien frío.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1600271886742-f049cd451bba'),
+    img: '/images/productos/060-boing-de-mango-500ml.jpg',
   },
   {
     nombre: 'Agua Ciel Purificada 1 Litro',
@@ -671,7 +671,7 @@ const rawProductos = [
     descripcion: 'Botella de 1 litro de agua Ciel purificada.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1523362628745-0c100150b504'),
+    img: '/images/productos/061-agua-ciel-purificada-1-litro.jpg',
   },
   {
     nombre: 'Agua Bonafont Levité Fresa 1L',
@@ -680,7 +680,7 @@ const rawProductos = [
     descripcion: 'Agua infusionada con sabor ligero a fresa natural.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1523362628745-0c100150b504'),
+    img: '/images/productos/062-agua-bonafont-levite-fresa-1l.jpg',
   },
   {
     nombre: 'Café Frío Americano con Hielo',
@@ -689,7 +689,7 @@ const rawProductos = [
     descripcion: 'Vaso de café frío recién preparado con grano de Chiapas.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1517256064527-09c73fc73e38'),
+    img: '/images/productos/063-cafe-frio-americano-con-hielo.jpg',
   },
   {
     nombre: 'Iced Latte Vainilla 400ml',
@@ -698,7 +698,7 @@ const rawProductos = [
     descripcion: 'Café espresso con leche entera y jarabe de vainilla con hielo.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1517256064527-09c73fc73e38'),
+    img: '/images/productos/064-iced-latte-vainilla-400ml.jpg',
   },
   {
     nombre: 'Jarritos Mandarina 600ml',
@@ -707,7 +707,7 @@ const rawProductos = [
     descripcion: 'Refresco mexicano tradicional sabor mandarina con gas bien helado.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1581009146145-b5ef050c2e1e'),
+    img: '/images/productos/065-jarritos-mandarina-600ml.jpg',
   },
   {
     nombre: 'Sprite 600ml Lima-Limón',
@@ -716,7 +716,7 @@ const rawProductos = [
     descripcion: 'Refresco Sprite 600ml bien frío.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1622483767028-3f66f32aef97'),
+    img: '/images/productos/066-sprite-600ml-lima-limon.jpg',
   },
   {
     nombre: 'Electrolit Coco 625ml',
@@ -725,7 +725,7 @@ const rawProductos = [
     descripcion: 'Suero oral rehidratante sabor coco, ideal para reponer energía.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1523362628745-0c100150b504'),
+    img: '/images/productos/067-electrolit-coco-625ml.jpg',
   },
   {
     nombre: 'Jugo del Valle Manzana 413ml',
@@ -734,7 +734,7 @@ const rawProductos = [
     descripcion: 'Néctar clarificado de manzana Del Valle en botella Pet.',
     vendedor_id: 'u3',
     vendido: 1,
-    img: unsplash('photo-1600271886742-f049cd451bba'),
+    img: '/images/productos/068-jugo-del-valle-manzana-413ml.jpg',
   },
 
   // ==================== DULCES (16 productos) ====================
@@ -745,7 +745,7 @@ const rawProductos = [
     descripcion: 'El auténtico mazapán de cacahuate que no se rompe si tienes suerte.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1509440159596-0249088772ff'),
+    img: '/images/productos/069-mazapan-de-la-rosa-gigante-50g.jpg',
   },
   {
     nombre: 'Mazapán Cubierto de Chocolate',
@@ -754,7 +754,7 @@ const rawProductos = [
     descripcion: 'Mazapán De la Rosa bañado en deliciosa cobertura de chocolate.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1606312619070-d48b4c652a52'),
+    img: '/images/productos/070-mazapan-cubierto-de-chocolate.jpg',
   },
   {
     nombre: 'Pelón Pelo Rico 30g',
@@ -763,7 +763,7 @@ const rawProductos = [
     descripcion: 'Caramelo suave sabor tamarindo para empujar.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/071-pelon-pelo-rico-30g.jpg',
   },
   {
     nombre: 'Paleta Payaso Ricolino 45g',
@@ -772,7 +772,7 @@ const rawProductos = [
     descripcion: 'Bombón esponjoso cubierto con chocolate y gomitas de cara sonriente.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1575224300306-1b8da36134ec'),
+    img: '/images/productos/072-paleta-payaso-ricolino-45g.jpg',
   },
   {
     nombre: 'Duvalín Avellana y Vainilla',
@@ -781,7 +781,7 @@ const rawProductos = [
     descripcion: 'Untable cremoso bicromatico con cucharita plástica incluida.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1534073828943-f801091bb18c'),
+    img: '/images/productos/073-duvalin-avellana-y-vainilla.jpg',
   },
   {
     nombre: 'Pulparindo Clásico De la Rosa',
@@ -790,7 +790,7 @@ const rawProductos = [
     descripcion: 'Barrita de pulpa de tamarindo natural salado y enchilado.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/074-pulparindo-clasico-de-la-rosa.jpg',
   },
   {
     nombre: 'Pulparindo Gigante Extra Picante',
@@ -799,7 +799,7 @@ const rawProductos = [
     descripcion: 'Pulparindo tamaño doble con extra chile habanero.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/075-pulparindo-gigante-extra-picante.jpg',
   },
   {
     nombre: 'Kranky Ricolino 40g',
@@ -808,7 +808,7 @@ const rawProductos = [
     descripcion: 'Hojuelas de maíz tostadas y crujientes cubiertas de chocolate.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1548365328-8c6db3220e4c'),
+    img: '/images/productos/076-kranky-ricolino-40g.jpg',
   },
   {
     nombre: 'Bubu Lubu Ricolino 35g',
@@ -817,7 +817,7 @@ const rawProductos = [
     descripcion: 'Malvavisco con jalea sabor fresa y cubierta de chocolate frío.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1606312619070-d48b4c652a52'),
+    img: '/images/productos/077-bubu-lubu-ricolino-35g.jpg',
   },
   {
     nombre: 'Chocolate Carlos V 18g',
@@ -826,7 +826,7 @@ const rawProductos = [
     descripcion: 'El rey de los chocolates con leche suizo-mexicano.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1606312619070-d48b4c652a52'),
+    img: '/images/productos/078-chocolate-carlos-v-18g.jpg',
   },
   {
     nombre: 'Snickers Barra 52g',
@@ -835,7 +835,7 @@ const rawProductos = [
     descripcion: 'Chocolate con relleno de caramelo, turrón y cacahuates tostados.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1606312619070-d48b4c652a52'),
+    img: '/images/productos/079-snickers-barra-52g.jpg',
   },
   {
     nombre: 'Kinder Bueno 43g',
@@ -844,7 +844,7 @@ const rawProductos = [
     descripcion: 'Dos barritas crujientes con barquillo relleno de crema de avellanas.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1590080875515-8a3a8dc5735e'),
+    img: '/images/productos/080-kinder-bueno-43g.jpg',
   },
   {
     nombre: 'Lucas Muecas Chamoy',
@@ -853,7 +853,7 @@ const rawProductos = [
     descripcion: 'Paleta sabor caramelo con chile en polvo en contenedor plástico.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1575224300306-1b8da36134ec'),
+    img: '/images/productos/081-lucas-muecas-chamoy.jpg',
   },
   {
     nombre: 'Rockaleta Paleta de Caramelo',
@@ -862,7 +862,7 @@ const rawProductos = [
     descripcion: 'Paleta con 4 capas de chiles de colores y centro de goma de mascar.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1575224300306-1b8da36134ec'),
+    img: '/images/productos/082-rockaleta-paleta-de-caramelo.jpg',
   },
   {
     nombre: 'Tamborines Enchilados 50g',
@@ -871,7 +871,7 @@ const rawProductos = [
     descripcion: 'Dulce suave de tamarindo con sal y chile en forma de tambor.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1541781774459-bb2af2f05b55'),
+    img: '/images/productos/083-tamborines-enchilados-50g.jpg',
   },
   {
     nombre: 'Ferrero Rocher paquete de 3',
@@ -880,7 +880,7 @@ const rawProductos = [
     descripcion: 'Bombones finos de avellana entera tostada envueltos en dorada presentación.',
     vendedor_id: 'u2',
     vendido: 1,
-    img: unsplash('photo-1526081347589-7fa3cb41b4b2'),
+    img: '/images/productos/084-ferrero-rocher-paquete-de-3.jpg',
   },
 
   // ==================== COMIDA (16 productos) ====================
@@ -891,7 +891,7 @@ const rawProductos = [
     descripcion: 'Rebanada grande de Little Caesars calientita con extra queso y pepperoni.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1513104890138-7c749659a591'),
+    img: '/images/productos/085-rebanada-de-pizza-pepperoni.jpg',
   },
   {
     nombre: 'Rebanada de Pizza Tres Quesos',
@@ -900,7 +900,7 @@ const rawProductos = [
     descripcion: 'Pizza con mozzarella, provolone y parmesano crujiente.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1513104890138-7c749659a591'),
+    img: '/images/productos/086-rebanada-de-pizza-tres-quesos.jpg',
   },
   {
     nombre: 'Torta de Milanesa con Queso',
@@ -909,7 +909,7 @@ const rawProductos = [
     descripcion: 'Torta en telera con milanesa de pollo empanizada, frijoles, quesillo y aguacate.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1568901346375-23c9450c58cd'),
+    img: '/images/productos/087-torta-de-milanesa-con-queso.jpg',
   },
   {
     nombre: 'Torta de Jamón y Queso Panela',
@@ -918,7 +918,7 @@ const rawProductos = [
     descripcion: 'Torta fresca con mayonesa, jitomate, lechuga y chiles en vinagre.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1528735602780-2552fd46c7af'),
+    img: '/images/productos/088-torta-de-jamon-y-queso-panela.jpg',
   },
   {
     nombre: 'Burrito de Bistec con Queso',
@@ -927,7 +927,7 @@ const rawProductos = [
     descripcion: 'Burrito norteño en tortilla de harina grande con bistec asado y queso gouda.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1626700051175-6818013e1d4f'),
+    img: '/images/productos/089-burrito-de-bistec-con-queso.jpg',
   },
   {
     nombre: 'Burrito de Chicharrón Prensado',
@@ -936,7 +936,7 @@ const rawProductos = [
     descripcion: 'Burrito relleno de chicharrón prensado guisado en salsa verde.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1626700051175-6818013e1d4f'),
+    img: '/images/productos/090-burrito-de-chicharron-prensado.jpg',
   },
   {
     nombre: 'Sándwich Clásico de Pavo',
@@ -945,7 +945,7 @@ const rawProductos = [
     descripcion: 'Pan integral con pechuga de pavo, queso manchego, lechuga y aderezo especial.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1528735602780-2552fd46c7af'),
+    img: '/images/productos/091-sandwich-clasico-de-pavo.jpg',
   },
   {
     nombre: 'Club Sándwich Triple con Papas',
@@ -954,7 +954,7 @@ const rawProductos = [
     descripcion: 'Tres pisos de sándwich con tocino, pollo, jamón, queso y papas fritas.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1528735602780-2552fd46c7af'),
+    img: '/images/productos/092-club-sandwich-triple-con-papas.jpg',
   },
   {
     nombre: 'Orden de Molletes con Frijol y Queso',
@@ -963,7 +963,7 @@ const rawProductos = [
     descripcion: 'Dos mitades de bolillo con frijoles refritos, queso gratinado y pico de gallo.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1509722747041-616f39b57569'),
+    img: '/images/productos/093-orden-de-molletes-con-frijol-y-queso.jpg',
   },
   {
     nombre: 'Hot Dog Especial con Tocino',
@@ -972,7 +972,7 @@ const rawProductos = [
     descripcion: 'Salchicha de pavo envuelta en tocino crujiente, jitomate, cebolla y aderezos.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1619740455993-9e612b1af08a'),
+    img: '/images/productos/094-hot-dog-especial-con-tocino.jpg',
   },
   {
     nombre: 'Quesadilla Gigante en Harina con Bistec',
@@ -981,7 +981,7 @@ const rawProductos = [
     descripcion: 'Tortilla de harina de 30cm doblada a la mitad con queso Oaxaca y bistec.',
     vendedor_id: 'u1',
     vendido: 0,
-    img: unsplash('photo-1551504734-5ee1c4a1479b'),
+    img: '/images/productos/095-quesadilla-gigante-en-harina-con-bistec.jpg',
   },
   {
     nombre: 'Orden de 3 Tacos al Pastor',
@@ -990,7 +990,7 @@ const rawProductos = [
     descripcion: 'Tres tacos de carne al pastor con piña, cilantro, cebolla y salsa taquera.',
     vendedor_id: 'u2',
     vendido: 0,
-    img: unsplash('photo-1551504734-5ee1c4a1479b'),
+    img: '/images/productos/096-orden-de-3-tacos-al-pastor.jpg',
   },
   {
     nombre: 'Sushi Roll California (8 piezas)',
@@ -999,7 +999,7 @@ const rawProductos = [
     descripcion: 'Rollo empanizado de surimi, queso crema y aguacate con salsa chipotle y soya.',
     vendedor_id: 'u3',
     vendido: 0,
-    img: unsplash('photo-1579871494447-9811cf80d66c'),
+    img: '/images/productos/097-sushi-roll-california-8-piezas.jpg',
   },
   {
     nombre: 'Hamburguesa con Queso y Tocino',
@@ -1008,7 +1008,7 @@ const rawProductos = [
     descripcion: 'Carne 100% res asada, queso americano, tocino crujiente, lechuga y tomate.',
     vendedor_id: 'u4',
     vendido: 0,
-    img: unsplash('photo-1568901346375-23c9450c58cd'),
+    img: '/images/productos/098-hamburguesa-con-queso-y-tocino.jpg',
   },
   {
     nombre: 'Ensalada César con Pollo Asado',
@@ -1017,7 +1017,7 @@ const rawProductos = [
     descripcion: 'Lechuga orejona fresca, pechuga de pollo a la plancha, crutones y aderezo césar.',
     vendedor_id: 'u5',
     vendido: 0,
-    img: unsplash('photo-1504674900247-0877df9cc836'),
+    img: '/images/productos/099-ensalada-cesar-con-pollo-asado.jpg',
   },
   {
     nombre: 'Sincronizada con Jamón y Doble Queso',
@@ -1026,7 +1026,7 @@ const rawProductos = [
     descripcion: 'Dos tortillas de harina con jamón de pavo y abundante queso fundido.',
     vendedor_id: 'u1',
     vendido: 1,
-    img: unsplash('photo-1551504734-5ee1c4a1479b'),
+    img: '/images/productos/100-sincronizada-con-jamon-y-doble-queso.jpg',
   },
 ];
 
@@ -1069,7 +1069,7 @@ console.log(`✓ Insertados exactamente ${rawProductos.length} productos en la b
 let sqlDump = `-- =====================================================================
 -- FIF STORE - DUMP OFICIAL DE BASE DE DATOS
 -- Compatible con: SQLite, DBeaver, TablePlus, MySQL, PostgreSQL
--- Total de productos: 100 registros con imágenes web
+-- Total de productos: 100 registros con imágenes locales (public/images/productos)
 -- =====================================================================
 
 DROP TABLE IF EXISTS favoritos;
@@ -1122,7 +1122,7 @@ usuarios.forEach((u) => {
   sqlDump += `INSERT INTO usuarios (id, nombre, carrera, telefono, correo, password) VALUES ('${u.id}', '${u.nombre.replace(/'/g, "''")}', '${u.carrera.replace(/'/g, "''")}', '${u.telefono}', '${u.correo}', '${u.password}');\n`;
 });
 
-sqlDump += `\n-- ---------------------------------------------------------------------\n-- INSERCIONES DE 100 PRODUCTOS CON IMÁGENES WEB\n-- ---------------------------------------------------------------------\n`;
+sqlDump += `\n-- ---------------------------------------------------------------------\n-- INSERCIONES DE 100 PRODUCTOS CON IMÁGENES LOCALES\n-- ---------------------------------------------------------------------\n`;
 
 rawProductos.forEach((p, index) => {
   const id = index + 1;

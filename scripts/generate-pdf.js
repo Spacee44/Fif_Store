@@ -299,6 +299,73 @@ async function generatePDF() {
     y -= 8;
   }
 
+  // Las fuentes estándar del PDF solo admiten la codificación WinAnsi (latín).
+  const EXTRA_WINANSI = '€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ';
+  function seguro(texto) {
+    return Array.from(String(texto).normalize('NFC')).map((ch) => {
+      const c = ch.codePointAt(0);
+      if ((c >= 0x20 && c <= 0x7e) || (c >= 0xa0 && c <= 0xff) || EXTRA_WINANSI.includes(ch)) return ch;
+      const base = ch.normalize('NFD').replace(/[̀-ͯ]/g, '');
+      return /^[\x20-\x7e]$/.test(base) ? base : '';
+    }).join('');
+  }
+
+  // Recorta el texto para que quepa en el ancho de la columna.
+  const recortados = [];
+  function ajustar(texto, ancho, font, size) {
+    let t = seguro(texto);
+    if (font.widthOfTextAtSize(t, size) <= ancho) return t;
+    recortados.push(String(texto));
+    while (t.length > 1 && font.widthOfTextAtSize(t + '…', size) > ancho) t = t.slice(0, -1);
+    return t + '…';
+  }
+
+  // Tabla larga: si no cabe, continúa en la página siguiente repitiendo el encabezado.
+  function drawLongTable(headers, rows, colWidths, size = 7.5) {
+    const rowHeight = 16;
+    const encabezado = () => {
+      currentPage.drawRectangle({ x: MARGIN, y: y - rowHeight + 4, width: CONTENT_WIDTH, height: rowHeight, color: primaryNavy });
+      let x = MARGIN;
+      headers.forEach((h, i) => {
+        currentPage.drawText(ajustar(h, colWidths[i] - 10, fontBold, 8), { x: x + 5, y: y - 7, size: 8, font: fontBold, color: white });
+        x += colWidths[i];
+      });
+      y -= rowHeight;
+    };
+    checkSpace(rowHeight * 3);
+    encabezado();
+    rows.forEach((row, rIdx) => {
+      if (y - rowHeight < MARGIN + 25) {
+        newPage();
+        encabezado();
+      }
+      currentPage.drawRectangle({
+        x: MARGIN, y: y - rowHeight + 4, width: CONTENT_WIDTH, height: rowHeight,
+        color: rIdx % 2 === 0 ? white : lightBg, borderColor: borderGray, borderWidth: 0.5,
+      });
+      let x = MARGIN;
+      row.forEach((cell, cIdx) => {
+        currentPage.drawText(ajustar(cell, colWidths[cIdx] - 10, fontRegular, size), { x: x + 5, y: y - 7, size, font: fontRegular, color: textDark });
+        x += colWidths[cIdx];
+      });
+      y -= rowHeight;
+    });
+    y -= 8;
+  }
+
+  // Créditos de las imágenes del catálogo (fuente única: CREDITOS_IMAGENES.md).
+  const creditosPath = path.join(__dirname, '..', 'CREDITOS_IMAGENES.md');
+  const creditos = fs.existsSync(creditosPath)
+    ? fs.readFileSync(creditosPath, 'utf8').split('\n')
+        .filter((l) => /^\| \d+ \|/.test(l))
+        .map((l) => l.split(/(?<!\\)\|/).slice(1, -1).map((c) => c.trim().replace(/\\\|/g, '|')))
+        .map(([id, producto, , fuente, autor, licencia]) => ({
+          id, producto, autor, licencia, fuente: fuente.replace(/^\[([^\]]+)\].*$/, '$1'),
+        }))
+    : [];
+  const totalOFF = creditos.filter((c) => c.fuente === 'Open Food Facts').length;
+  const totalWM = creditos.filter((c) => c.fuente === 'Wikimedia Commons').length;
+
   // ==========================================
   // PÁGINA 1: PORTADA Y RESUMEN EJECUTIVO
   // ==========================================
@@ -346,7 +413,7 @@ async function generatePDF() {
     color: white,
   });
 
-  currentPage.drawText('Base de Datos DBA, 100 Productos con Imágenes Web y Sistema de Autenticación', {
+  currentPage.drawText('Vistas del diseño, Base de Datos, Autenticación y 100 productos con imágenes reales', {
     x: MARGIN,
     y: PAGE_HEIGHT - 120,
     size: 9.5,
@@ -393,27 +460,62 @@ async function generatePDF() {
     metaX += 240;
   });
 
-  y -= 45;
+  y -= 58; // separación entre la ficha técnica y el primer título
 
   drawHeading1('1. Resumen Ejecutivo');
   drawParagraph(
     'El presente documento detalla la ingeniería técnica, arquitectura de software y modificaciones aplicadas al proyecto "FIF Store", una plataforma web progresiva para el comercio estudiantil dentro de la Facultad de Informática de la Universidad Autónoma de Querétaro (UAQ).'
   );
   drawParagraph(
-    'En respuesta a los requerimientos solicitados, se cumplieron al 100% los cuatro objetivos clave:'
+    'En respuesta a los requerimientos solicitados, se cumplieron los siguientes objetivos clave:'
   );
 
-  drawBullet('1. Catálogo Masivo', 'Inserción exitosa de exactamente 100 productos clasificados en las 6 categorías institucionales con fotografías temáticas en alta resolución extraídas de la web.');
-  drawBullet('2. Base de Datos Relacional para DBA', 'Implementación de SQLite embebido con mejor rendimiento (better-sqlite3 en modo WAL), con llaves foráneas e índices. Además, se exportó el script fif_store.sql compatible con DBeaver, TablePlus, DataGrip, MySQL y PostgreSQL.');
-  drawBullet('3. Autenticación Real (Login y Registro)', 'Desarrollo de API Routes seguras con hashing de contraseñas mediante bcryptjs, restricción por dominio institucional (@uaq.edu.mx) y control de sesiones persistentes.');
-  drawBullet('4. Documentación y Reporte en PDF', 'Generación automatizada de este informe técnico exhaustivo con especificaciones arquitectónicas, diagramas relacionales y guías de validación.');
+  drawBullet('1. Vistas del Diseño en Figma', 'Implementación de las 14 pantallas del prototipo (inicio de sesión, registro, feed, detalle, publicación, favoritos, perfiles y sus estados vacíos y de confirmación) como una app web con aspecto móvil.');
+  drawBullet('2. Catálogo de 100 Productos', 'Inserción de exactamente 100 productos clasificados en las 6 categorías institucionales, cada uno con una fotografía real del producto, verificada una por una y almacenada en el propio proyecto.');
+  drawBullet('3. Base de Datos Relacional para DBA', 'Implementación de SQLite embebido con mejor rendimiento (better-sqlite3 en modo WAL), con llaves foráneas e índices. Además, se exportó el script fif_store.sql compatible con DBeaver, TablePlus, DataGrip, MySQL y PostgreSQL.');
+  drawBullet('4. Autenticación Real (Login y Registro)', 'Desarrollo de API Routes seguras con hashing de contraseñas mediante bcryptjs, restricción por dominio institucional (@uaq.edu.mx) y control de sesiones persistentes.');
+  drawBullet('5. Documentación y Reporte en PDF', 'README completo del repositorio, créditos y licencias de cada imagen (CREDITOS_IMAGENES.md) y generación automatizada de este informe técnico.');
 
   // ==========================================
-  // PÁGINA 2: ARQUITECTURA Y BASE DE DATOS
+  // VISTAS IMPLEMENTADAS (DISEÑO EN FIGMA)
   // ==========================================
   newPage();
 
-  drawHeading1('2. Base de Datos Relacional y Conexión para DBA');
+  drawHeading1('2. Vistas Implementadas a partir del Diseño en Figma');
+  drawParagraph(
+    'Las pantallas se construyeron a partir del prototipo de Figma del proyecto con Next.js (App Router), React y Tailwind CSS. Todas comparten un marco con aspecto de teléfono, la paleta de colores del diseño y los íconos exportados de Figma (public/icons).'
+  );
+
+  drawTable(
+    ['Ruta', 'Pantalla', 'Funcionalidad'],
+    [
+      ['/', 'Inicio de sesión', 'Acceso con correo institucional y botón de cuenta demo'],
+      ['/registro', 'Crear cuenta', 'Alta con nombre, correo institucional y contraseña'],
+      ['/feed', 'Inicio (feed)', 'Catálogo con buscador, filtros y estado sin resultados'],
+      ['/producto/[id]', 'Detalle (comprador)', 'Favorito, datos del vendedor y botón Comprar (WhatsApp)'],
+      ['/producto/[id]', 'Detalle (dueño)', 'Editar, marcar como vendido y eliminar con confirmación'],
+      ['/producto/[id]/editar', 'Editar publicación', 'Formulario precargado, solo para el dueño'],
+      ['/vender', 'Nueva publicación', 'Hasta 4 fotos, nombre, precio, descripción y categoría'],
+      ['/favoritos', 'Favoritos', 'Lista de productos guardados y estado vacío'],
+      ['/perfil', 'Mi perfil', 'Datos, estadísticas y publicaciones propias'],
+      ['/perfil/editar', 'Editar perfil', 'Nombre, carrera y teléfono'],
+      ['/vendedor/[id]', 'Perfil de vendedor', 'Publicaciones disponibles y botón Contactar'],
+    ],
+    [120, 110, 275]
+  );
+
+  drawHeading2('Componentes Reutilizables');
+  drawBullet('Marco y navegación', 'phoneShell (marco móvil), topBar (barra superior con botón de regreso) y bottomNav (inicio, publicar y perfil), en app/components/ui.');
+  drawBullet('Elementos comunes', 'avatar con iniciales, productImage (foto del producto o ícono de su categoría) y confirmDialog (modal "Eliminar publicación").');
+  drawBullet('Formulario de publicación', 'productForm se usa para crear y para editar; reduce las fotos a 800 px antes de guardarlas.');
+  drawBullet('Estados vacíos', 'Búsqueda sin resultados y favoritos vacíos, con los íconos y textos del diseño.');
+
+  // ==========================================
+  // ARQUITECTURA Y BASE DE DATOS
+  // ==========================================
+  newPage();
+
+  drawHeading1('3. Base de Datos Relacional y Conexión para DBA');
   drawParagraph(
     'Para garantizar portabilidad absoluta y compatibilidad inmediata con clientes de administración de bases de datos (DBA Tools), se diseñó e implementó un esquema relacional normalizado persistido en fif_store.db y fif_store.sql.'
   );
@@ -439,7 +541,7 @@ async function generatePDF() {
       ['productos', 'descripcion', 'TEXT NOT NULL', 'Detalles de entrega en facultades o salones'],
       ['productos', 'vendedor_id', 'TEXT (FK)', 'Relación foránea hacia usuarios(id) con CASCADE'],
       ['productos', 'vendido', 'INTEGER (0/1)', 'Bandera booleana de disponibilidad'],
-      ['productos', 'imagenes', 'TEXT (JSON)', 'Arreglo JSON de URLs de fotografías web en alta calidad'],
+      ['productos', 'imagenes', 'TEXT (JSON)', 'JSON con rutas locales (/images/productos) o Base64'],
       ['favoritos', 'id', 'INTEGER (PK)', 'Identificador autoincremental del marcador'],
       ['favoritos', 'usuario_id', 'TEXT (FK)', 'Alumno que guardó el favorito'],
       ['favoritos', 'producto_id', 'INTEGER (FK)', 'Producto guardado en favoritos'],
@@ -456,11 +558,11 @@ async function generatePDF() {
   drawBullet('Opción B (Importación en MySQL / PostgreSQL / Oracle)', 'Se generó en la raíz el archivo fif_store.sql que contiene todos los CREATE TABLE, DROP TABLE e INSERT INTO con sintaxis universal ANSI SQL, permitiendo su importación directa en MySQL Workbench, phpMyAdmin o pgAdmin.');
 
   // ==========================================
-  // PÁGINA 3: CATÁLOGO DE 100 PRODUCTOS
+  // CATÁLOGO DE 100 PRODUCTOS E IMÁGENES
   // ==========================================
   newPage();
 
-  drawHeading1('3. Catálogo de 100 Registros con Fotografías Web');
+  drawHeading1('4. Catálogo de 100 Productos con Fotografías Reales');
   drawParagraph(
     'Se realizó un exhaustivo proceso de poblamiento con 100 registros fieles a la vida universitaria y a los comercios cotidianos de los estudiantes de la FIF (botanas, dulces típicos mexicanos, galletas, bebidas heladas y comida preparada).'
   );
@@ -480,35 +582,73 @@ async function generatePDF() {
     [75, 60, 95, 275]
   );
 
-  drawHeading2('Lógica de Asignación y Extracción de Imágenes Web');
+  drawHeading2('Obtención y Verificación de las Imágenes');
   drawParagraph(
-    'Para brindar una experiencia visual profesional y fidedigna, se implementó una lógica de asignación que enlaza cada registro con URLs directas de fotografía de producto y alimentos provenientes de CDNs web optimizadas (Unsplash Food & Beverages Cluster):'
+    'En la primera versión, cada producto enlazaba a una fotografía genérica de Unsplash que en varios casos no correspondía al artículo (por ejemplo, una pizza para unas papas adobadas). Por ello se sustituyeron las 100 imágenes por fotografías del producto real, elegidas una por una:'
   );
 
-  drawBullet('Resolución y Rendimiento', 'Cada URL incluye parámetros de optimización dinámica (?auto=format&fit=crop&w=600&q=80), garantizando compresión WebP/JPEG rápida, bajo consumo de ancho de banda y carga diferida (lazy loading).');
-  drawBullet('Mapeo Semántico', 'No se utilizaron imágenes aleatorias. Cada producto cuenta con una fotografía correspondiente a su textura y naturaleza (ej. totopos crujientes para Doritos, malvaviscos para paleta payaso, rebanadas doradas para pizza).');
-  drawBullet('Mecanismo de Resiliencia (Fallback)', 'En app/components/ui/productImage.tsx se agregó un manejador onError que, en caso de fallo de conexión a Internet, conmuta de forma invisible al icono ilustrativo oficial de la categoría.');
+  drawBullet(`Productos de marca (${totalOFF})`, 'Fotografías reales del empaque tomadas de Open Food Facts, base de datos abierta de alimentos, dando prioridad a los productos registrados en México. Licencia CC BY-SA 3.0.');
+  drawBullet(`Comida preparada y genéricos (${totalWM})`, 'Fotografías de Wikimedia Commons con licencias libres (CC0, dominio público, CC BY y CC BY-SA).');
+  drawBullet('Búsqueda y verificación', 'Para cada producto se hicieron búsquedas específicas por marca, sabor y presentación (hasta tres rondas). Los candidatos se revisaron visualmente en hojas de contacto y se eligió la foto que muestra el producto exacto.');
+  drawBullet('Almacenamiento local', 'Las 100 imágenes se guardaron en public/images/productos (JPEG, máximo 600 px, 7.4 MB en total) con nombres descriptivos como 001-takis-fuego-240g.jpg. Ya no dependen de servicios externos ni de conexión a Internet.');
+  drawBullet('Actualización de referencias', 'Se actualizaron las rutas en fif_store.db (UPDATE en sitio que conserva usuarios y favoritos, seguido de VACUUM), fif_store.sql, scripts/seed.js y app/lib/data.ts. La caché del navegador cambió a la clave fif-store-v3 para no mostrar las URLs anteriores.');
+  drawBullet('Mecanismo de resiliencia (fallback)', 'app/components/ui/productImage.tsx conserva el manejador onError: si una imagen no carga, se muestra el ícono ilustrativo de su categoría.');
+  drawBullet('Créditos', 'La fuente, el autor y la licencia de cada imagen están en CREDITOS_IMAGENES.md y en el Anexo A de este reporte.');
+
+  drawHeading2('Productos con Imagen Aproximada');
+  drawParagraph(
+    'Para los siguientes productos no existe una fotografía libre del artículo exacto (la marca no es real o la variante no está registrada), por lo que se usó la imagen disponible más cercana:'
+  );
+  drawLongTable(
+    ['ID', 'Producto', 'Imagen utilizada'],
+    [
+      ['4, 5', 'Chidas Jalapeño / Chidas Adobadas', 'Barcel Chips Jalapeño y Lay\'s Adobadas ("Chidas" no es marca real)'],
+      ['33', 'Galletas Piruetas Gamesa', 'Pirouline (barquillo enrollado); no hay registro del producto'],
+      ['34', 'Wafers Vainilla Bauducco', 'Wafer de vainilla Signor; no hay foto de la versión de vainilla'],
+      ['42', 'Skwinkles Clásicos Tamarindo', 'Skwinkles Chunks (mango con relleno de tamarindo)'],
+      ['43, 47', 'Gomitas Dientes / Tiburones Trolli', 'Gomitas de colmillos (Over Joyed) y Tiburoncitos (Mogul)'],
+      ['51', 'Gomitas Fritas Botana Mix', 'Fotografía de dulces enchilados mexicanos'],
+      ['52', 'Coca-Cola 600ml Fría', 'Botella clásica de vidrio en lugar de la de plástico de 600 ml'],
+      ['73', 'Duvalín Avellana y Vainilla', 'Duvalín de tres sabores (avellana, fresa y vainilla)'],
+      ['88, 90', 'Torta de jamón / Burrito de chicharrón', 'Torta de jamón con huevo y burrito norteño de chile verde'],
+    ],
+    [40, 170, 295]
+  );
 
   // ==========================================
-  // PÁGINA 4: SISTEMA DE AUTENTICACIÓN
+  // SISTEMA DE AUTENTICACIÓN Y API
+  // (continúa en la misma página que la tabla anterior)
   // ==========================================
-  newPage();
-
-  drawHeading1('4. Módulo de Autenticación: Login y Registro');
+  drawHeading1('5. Módulo de Autenticación: Login y Registro');
   drawParagraph(
     'Se reemplazaron los formularios estáticos con un sistema completo de autenticación de dos factores lógicos: validación en capa de cliente y procesamiento en endpoints API seguros.'
   );
 
   drawHeading2('Endpoints REST Implementados');
-  drawTable(
+  drawLongTable(
     ['Método', 'Ruta', 'Función Principal', 'Códigos de Respuesta'],
     [
-      ['POST', '/api/auth/login', 'Verificación de credenciales con bcrypt y emisión de cookie de sesión', '200 OK, 400 Bad Request, 401 Unauthorized'],
-      ['POST', '/api/auth/register', 'Validación de dominio @uaq.edu.mx, hash de password y alta en BD', '200 OK, 400 Bad Request, 409 Conflict'],
-      ['GET', '/api/auth/me', 'Devuelve el usuario actual en sesión y directorio de alumnos', '200 OK'],
-      ['POST', '/api/auth/logout', 'Destruye la cookie de sesión y restablece estado en el cliente', '200 OK'],
+      ['POST', '/api/auth/login', 'Verifica credenciales (bcrypt) y crea la cookie de sesión', '200, 400, 401, 500'],
+      ['POST', '/api/auth/register', 'Valida dominio @uaq.edu.mx, cifra la contraseña y registra', '200, 400, 409, 500'],
+      ['GET', '/api/auth/me', 'Devuelve el usuario en sesión y el directorio de alumnos', '200'],
+      ['POST', '/api/auth/logout', 'Elimina la cookie de sesión y restablece el cliente', '200'],
     ],
-    [55, 115, 220, 115]
+    [45, 105, 240, 115]
+  );
+
+  drawHeading2('Endpoints de Productos y Favoritos');
+  drawLongTable(
+    ['Método', 'Ruta', 'Función Principal', 'Códigos de Respuesta'],
+    [
+      ['GET', '/api/productos', 'Lista productos (filtros ?categoria= y ?q=)', '200, 500'],
+      ['POST', '/api/productos', 'Crea una publicación del usuario en sesión', '200, 400, 500'],
+      ['GET', '/api/productos/[id]', 'Devuelve el detalle de un producto', '200, 404, 500'],
+      ['PUT', '/api/productos/[id]', 'Edita los datos o marca como vendido', '200, 500'],
+      ['DELETE', '/api/productos/[id]', 'Elimina una publicación', '200, 500'],
+      ['GET', '/api/favoritos', 'Lista los favoritos del usuario', '200, 500'],
+      ['POST', '/api/favoritos', 'Agrega o quita un producto de favoritos', '200, 400, 500'],
+    ],
+    [45, 105, 240, 115]
   );
 
   drawHeading2('Seguridad y Hashing con Bcrypt');
@@ -536,19 +676,45 @@ async function generatePDF() {
   ]);
 
   // ==========================================
-  // PÁGINA 5: RESUMEN DE MODIFICACIONES Y PRUEBAS
+  // EJECUCIÓN, DOCUMENTACIÓN Y SOLUCIÓN DE PROBLEMAS
   // ==========================================
   newPage();
 
-  drawHeading1('5. Matriz de Modificaciones de Archivos');
+  drawHeading1('6. Ejecución, Documentación y Solución de Problemas');
+  drawParagraph(
+    'El repositorio incluye un README.md en español con la descripción de la aplicación, sus pantallas, la instalación, las cuentas de prueba, la estructura del proyecto, la base de datos, las imágenes, la API y las limitaciones conocidas. Para ejecutar el proyecto:'
+  );
+  drawCodeBlock([
+    'git clone https://github.com/Spacee44/Fif_Store.git',
+    'cd Fif_Store',
+    'npm ci        # instala las versiones exactas de package-lock.json',
+    'npm run dev   # servidor en http://localhost:3000',
+  ]);
+  drawBullet('Cuarentena de macOS (AirDrop o ZIP)', 'Al copiar el proyecto por AirDrop, macOS marca node_modules en cuarentena y bloquea los módulos nativos (better-sqlite3, Tailwind y Turbopack) con el error "library load disallowed by system policy". Solución: clonar el repositorio con git y ejecutar npm ci, o reinstalar con rm -rf node_modules && npm ci.');
+  drawBullet('Avisos de npm 11', 'npm puede advertir que los scripts de instalación de better-sqlite3, esbuild y unrs-resolver no están aprobados. No impide ejecutar la aplicación, porque better-sqlite3 incluye binarios precompilados.');
+  drawBullet('Respaldo de la base de datos', 'Por el modo WAL, antes de hacer commit de fif_store.db conviene detener el servidor, para que los cambios recientes pasen del archivo fif_store.db-wal (ignorado por Git) al archivo principal.');
+  drawBullet('Créditos de imágenes', 'CREDITOS_IMAGENES.md documenta la fuente, el autor y la licencia de cada una de las 100 fotografías (ver Anexo A).');
+
+  drawHeading1('7. Limitaciones Conocidas y Trabajo Futuro');
+  drawBullet('Sesión', 'La cookie de sesión guarda el id del usuario sin firma, por lo que podría falsificarse. Se recomienda un token firmado (por ejemplo, JWT) o sesiones del lado del servidor.');
+  drawBullet('Autorización', 'Los endpoints PUT y DELETE de /api/productos/[id] no verifican que quien hace la petición sea el dueño de la publicación.');
+  drawBullet('Fotos de los usuarios', 'Se guardan en Base64 dentro de la base de datos, lo que la hace crecer rápido; convendría guardarlas como archivos o en un almacenamiento de objetos.');
+  drawBullet('Imágenes aproximadas', 'Los productos listados en la sección 4 usan la imagen disponible más cercana; pueden renombrarse o fotografiarse para que coincidan exactamente.');
+
+  // ==========================================
+  // RESUMEN DE MODIFICACIONES
+  // ==========================================
+  newPage();
+
+  drawHeading1('8. Matriz de Modificaciones de Archivos');
   drawParagraph(
     'A continuación se resume el inventario de archivos creados y editados en el repositorio:'
   );
 
-  drawTable(
+  drawLongTable(
     ['Archivo / Ruta', 'Estado', 'Descripción del Cambio'],
     [
-      ['fif_store.db', 'Creado', 'Base de datos SQLite activa con 100 productos y 5 usuarios.'],
+      ['fif_store.db', 'Creado', 'Base de datos SQLite con 100 productos y usuarios de prueba.'],
       ['fif_store.sql', 'Creado', 'Script SQL para DBAs (DBeaver, MySQL, Postgres, SQLite).'],
       ['app/lib/db.ts', 'Creado', 'Capa de acceso de datos con better-sqlite3 y modo WAL.'],
       ['app/lib/auth.ts', 'Creado', 'Manejo de cookies HTTP-Only y hashing con bcryptjs.'],
@@ -563,24 +729,36 @@ async function generatePDF() {
       ['app/components/auth/register.tsx', 'Modificado', 'Formulario completo con carrera, tel y validaciones.'],
       ['app/components/profile/profileView.tsx', 'Modificado', 'Soporte de sesión dinámica y botón de Logout.'],
       ['app/components/ui/productImage.tsx', 'Modificado', 'Lazy loading y fallback onError automático.'],
-      ['app/lib/store.ts', 'Modificado', 'Sincronización híbrida LocalStorage + API SQLite.'],
-      ['app/lib/data.ts', 'Modificado', 'Catálogo inicial de 100 productos con tipado estricto.'],
-      ['scripts/seed.js', 'Creado', 'Script de generación y migración de datos.'],
+      ['app/lib/store.ts', 'Modificado', 'Sincronización LocalStorage + API SQLite; caché v3.'],
+      ['app/lib/data.ts', 'Modificado', 'Catálogo de 100 productos con imágenes locales.'],
+      ['scripts/seed.js', 'Creado', 'Generación de datos con rutas de imágenes locales.'],
+      ['app/components/ui/', 'Creado', 'Marco móvil, barras, avatar, imagen y diálogo.'],
+      ['app/components/main/productDetail.tsx', 'Creado', 'Detalle de producto: vista de comprador y de dueño.'],
+      ['app/components/products/', 'Creado', 'Formulario de publicación (nueva y edición) con fotos.'],
+      ['app/components/favorites/favorites.tsx', 'Creado', 'Lista de favoritos y estado vacío.'],
+      ['app/components/profile/editProfile.tsx', 'Creado', 'Edición de nombre, carrera y teléfono.'],
+      ['app/<ruta>/page.tsx', 'Creado', 'Páginas: registro, vender, favoritos, perfil, producto.'],
+      ['public/icons/', 'Creado', 'Íconos exportados del diseño en Figma.'],
+      ['public/images/productos/', 'Creado', '100 fotografías reales del catálogo (JPEG, máx. 600 px).'],
+      ['CREDITOS_IMAGENES.md', 'Creado', 'Fuente, autor y licencia de cada imagen.'],
+      ['README.md', 'Modificado', 'Documentación completa del proyecto en español.'],
+      ['scripts/generate-pdf.js', 'Modificado', 'Reporte ampliado: vistas, imágenes, problemas y anexo.'],
     ],
-    [155, 65, 285]
+    [185, 60, 260]
   );
 
-  drawHeading1('6. Conclusión y Verificación');
+  drawHeading1('9. Conclusión y Verificación');
   drawParagraph(
     'El sistema "FIF Store" se encuentra completamente operativo, con su base de datos lista para inspección por parte de un DBA y con el servidor de desarrollo Next.js listo para ser levantado o probado en producción.'
   );
 
   // Cuadro final de validación exitosa
+  checkSpace(80);
   currentPage.drawRectangle({
     x: MARGIN,
-    y: y - 55,
+    y: y - 67,
     width: CONTENT_WIDTH,
-    height: 55,
+    height: 67,
     color: rgb(236 / 255, 253 / 255, 245 / 255),
     borderColor: rgb(110 / 255, 231 / 255, 183 / 255),
     borderWidth: 1,
@@ -594,7 +772,7 @@ async function generatePDF() {
     color: rgb(6 / 255, 95 / 255, 70 / 255),
   });
 
-  currentPage.drawText('• 100 Productos insertados y verificados con imágenes web', {
+  currentPage.drawText('• 100 productos con fotografías reales, verificadas y guardadas en el proyecto', {
     x: MARGIN + 12,
     y: y - 32,
     size: 8.5,
@@ -609,6 +787,35 @@ async function generatePDF() {
     font: fontRegular,
     color: rgb(6 / 255, 95 / 255, 70 / 255),
   });
+
+  currentPage.drawText('• 14 pantallas del diseño implementadas; README y créditos de imágenes documentados', {
+    x: MARGIN + 12,
+    y: y - 56,
+    size: 8.5,
+    font: fontRegular,
+    color: rgb(6 / 255, 95 / 255, 70 / 255),
+  });
+  y -= 75;
+
+  // ==========================================
+  // ANEXO A: CRÉDITOS DE LAS IMÁGENES
+  // ==========================================
+  if (creditos.length) {
+    newPage();
+    drawHeading1('Anexo A. Créditos de las Imágenes del Catálogo');
+    drawParagraph(
+      `Fuente, autor y licencia de cada una de las ${creditos.length} fotografías de public/images/productos. El enlace a cada imagen original está en CREDITOS_IMAGENES.md. Las marcas y empaques pertenecen a sus respectivos dueños y se usan con fines académicos.`
+    );
+    drawLongTable(
+      ['ID', 'Producto', 'Fuente', 'Autor', 'Licencia'],
+      creditos.map((c) => [c.id, c.producto, c.fuente, c.autor, c.licencia]),
+      [26, 170, 92, 150, 67]
+    );
+  }
+
+  if (recortados.length) {
+    console.warn(`⚠ ${recortados.length} texto(s) recortados para caber en su columna:`, recortados);
+  }
 
   // Numeración de páginas en pie de página
   const totalPages = pages.length;

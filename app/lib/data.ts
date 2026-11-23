@@ -96,7 +96,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1621447504864-d8686e12698c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/001-takis-fuego-240g.jpg"
     ]
   },
   {
@@ -108,7 +108,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/002-ruffles-queso-185g.jpg"
     ]
   },
   {
@@ -120,7 +120,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/003-doritos-nacho-245g.jpg"
     ]
   },
   {
@@ -132,7 +132,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/004-chidas-jalapeno.jpg"
     ]
   },
   {
@@ -144,7 +144,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/005-chidas-adobadas-250g.jpg"
     ]
   },
   {
@@ -156,7 +156,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/006-cheetos-torciditos-150g.jpg"
     ]
   },
   {
@@ -168,7 +168,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1621447504864-d8686e12698c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/007-cheetos-flamin-hot-160g.jpg"
     ]
   },
   {
@@ -180,7 +180,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/008-sabritas-sal-clasicas-170g.jpg"
     ]
   },
   {
@@ -192,7 +192,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1600952841320-db92ec4047ca?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/009-sabritas-crema-y-especias.jpg"
     ]
   },
   {
@@ -204,7 +204,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/010-chips-fuego-barcel-170g.jpg"
     ]
   },
   {
@@ -216,7 +216,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/011-chips-jalapeno-barcel-170g.jpg"
     ]
   },
   {
@@ -228,7 +228,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/012-papas-caseras-con-salsa-y-limon.jpg"
     ]
   },
   {
@@ -240,7 +240,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1527842891421-42eec6e703ea?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/013-doritos-dinamita-chile-y-limon.jpg"
     ]
   },
   {
@@ -252,7 +252,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1621447504864-d8686e12698c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/014-runners-barcel-180g.jpg"
     ]
   },
   {
@@ -264,7 +264,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/015-papas-pringles-original-124g.jpg"
     ]
   },
   {
@@ -276,7 +276,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1600952841320-db92ec4047ca?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/016-papas-pringles-sour-cream-y-onion.jpg"
     ]
   },
   {
@@ -288,7 +288,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": true,
     "imagenes": [
-      "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/017-tostitos-salsa-verde-240g.jpg"
     ]
   },
   {
@@ -300,7 +300,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/018-emperador-chocolate-101g.jpg"
     ]
   },
   {
@@ -312,7 +312,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1557082673-e847a95781a7?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/019-emperador-limon-101g.jpg"
     ]
   },
   {
@@ -324,7 +324,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/020-emperador-combinado-101g.jpg"
     ]
   },
   {
@@ -336,7 +336,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/021-chokis-clasicas-84g.jpg"
     ]
   },
   {
@@ -348,7 +348,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/022-chokis-brownie-76g.jpg"
     ]
   },
   {
@@ -360,7 +360,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/023-oreo-original-114g.jpg"
     ]
   },
   {
@@ -372,7 +372,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/024-oreo-doble-crema-120g.jpg"
     ]
   },
   {
@@ -384,7 +384,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/025-brownies-caseros-con-nuez.jpg"
     ]
   },
   {
@@ -396,7 +396,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/026-canelitas-gamesa-120g.jpg"
     ]
   },
   {
@@ -408,7 +408,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1557082673-e847a95781a7?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/027-polvorones-naranja-gamesa-113g.jpg"
     ]
   },
   {
@@ -420,7 +420,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/028-galletas-marias-gamesa-170g.jpg"
     ]
   },
   {
@@ -432,7 +432,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/029-principe-marinela-chocolate-106g.jpg"
     ]
   },
   {
@@ -444,7 +444,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/030-barritas-marinela-fresa-75g.jpg"
     ]
   },
   {
@@ -456,7 +456,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/031-barritas-marinela-pina-75g.jpg"
     ]
   },
   {
@@ -468,7 +468,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/032-triki-trakes-marinela-86g.jpg"
     ]
   },
   {
@@ -480,7 +480,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1557082673-e847a95781a7?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/033-galletas-piruetas-gamesa-100g.jpg"
     ]
   },
   {
@@ -492,7 +492,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": true,
     "imagenes": [
-      "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/034-wafers-vainilla-bauducco-140g.jpg"
     ]
   },
   {
@@ -504,7 +504,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/035-panditas-clasicos-ricolino-65g.jpg"
     ]
   },
   {
@@ -516,7 +516,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/036-panditas-enchilados-65g.jpg"
     ]
   },
   {
@@ -528,7 +528,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/037-gusanos-acidos-trolli-100g.jpg"
     ]
   },
   {
@@ -540,7 +540,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/038-gomitas-enchiladas-de-mango.jpg"
     ]
   },
   {
@@ -552,7 +552,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1572097662444-0bab80029b98?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/039-aros-de-durazno-acidos-90g.jpg"
     ]
   },
   {
@@ -564,7 +564,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/040-skwinkles-salsagheti-sandia.jpg"
     ]
   },
   {
@@ -576,7 +576,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/041-skwinkles-rellenos-pina-26g.jpg"
     ]
   },
   {
@@ -588,7 +588,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/042-skwinkles-clasicos-tamarindo.jpg"
     ]
   },
   {
@@ -600,7 +600,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1572097662444-0bab80029b98?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/043-gomitas-dientes-trolli-80g.jpg"
     ]
   },
   {
@@ -612,7 +612,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/044-gomitas-moras-silvestres-90g.jpg"
     ]
   },
   {
@@ -624,7 +624,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1572097662444-0bab80029b98?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/045-gomitas-frutitas-agridulces-100g.jpg"
     ]
   },
   {
@@ -636,7 +636,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/046-gomitas-sandia-con-chile-100g.jpg"
     ]
   },
   {
@@ -648,7 +648,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/047-gomitas-tiburones-azules-trolli.jpg"
     ]
   },
   {
@@ -660,7 +660,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/048-gomitas-hamburguesa-trolli.jpg"
     ]
   },
   {
@@ -672,7 +672,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/049-gomitas-pulpos-acidos-90g.jpg"
     ]
   },
   {
@@ -684,7 +684,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1572097662444-0bab80029b98?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/050-gomitas-cerezas-gemelas-90g.jpg"
     ]
   },
   {
@@ -696,7 +696,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": true,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/051-gomitas-fritas-botana-mix-120g.jpg"
     ]
   },
   {
@@ -708,7 +708,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/052-coca-cola-600ml-fria.jpg"
     ]
   },
   {
@@ -720,7 +720,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/053-coca-cola-sin-azucar-600ml.png"
     ]
   },
   {
@@ -732,7 +732,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/054-red-bull-energy-drink-250ml.jpg"
     ]
   },
   {
@@ -744,7 +744,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/055-monster-energy-mango-loco-473ml.jpg"
     ]
   },
   {
@@ -756,7 +756,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/056-monster-energy-ultra-white-473ml.jpg"
     ]
   },
   {
@@ -768,7 +768,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/057-arizona-green-tea-con-miel-680ml.jpg"
     ]
   },
   {
@@ -780,7 +780,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/058-arizona-sandia-mucho-mango-680ml.jpg"
     ]
   },
   {
@@ -792,7 +792,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/059-boing-de-guayaba-500ml.jpg"
     ]
   },
   {
@@ -804,7 +804,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/060-boing-de-mango-500ml.jpg"
     ]
   },
   {
@@ -816,7 +816,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/061-agua-ciel-purificada-1-litro.jpg"
     ]
   },
   {
@@ -828,7 +828,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/062-agua-bonafont-levite-fresa-1l.jpg"
     ]
   },
   {
@@ -840,7 +840,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/063-cafe-frio-americano-con-hielo.jpg"
     ]
   },
   {
@@ -852,7 +852,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/064-iced-latte-vainilla-400ml.jpg"
     ]
   },
   {
@@ -864,7 +864,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/065-jarritos-mandarina-600ml.jpg"
     ]
   },
   {
@@ -876,7 +876,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/066-sprite-600ml-lima-limon.jpg"
     ]
   },
   {
@@ -888,7 +888,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/067-electrolit-coco-625ml.jpg"
     ]
   },
   {
@@ -900,7 +900,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": true,
     "imagenes": [
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/068-jugo-del-valle-manzana-413ml.jpg"
     ]
   },
   {
@@ -912,7 +912,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/069-mazapan-de-la-rosa-gigante-50g.jpg"
     ]
   },
   {
@@ -924,7 +924,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/070-mazapan-cubierto-de-chocolate.jpg"
     ]
   },
   {
@@ -936,7 +936,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/071-pelon-pelo-rico-30g.jpg"
     ]
   },
   {
@@ -948,7 +948,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/072-paleta-payaso-ricolino-45g.jpg"
     ]
   },
   {
@@ -960,7 +960,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1534073828943-f801091bb18c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/073-duvalin-avellana-y-vainilla.jpg"
     ]
   },
   {
@@ -972,7 +972,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/074-pulparindo-clasico-de-la-rosa.jpg"
     ]
   },
   {
@@ -984,7 +984,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/075-pulparindo-gigante-extra-picante.jpg"
     ]
   },
   {
@@ -996,7 +996,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/076-kranky-ricolino-40g.jpg"
     ]
   },
   {
@@ -1008,7 +1008,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/077-bubu-lubu-ricolino-35g.jpg"
     ]
   },
   {
@@ -1020,7 +1020,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/078-chocolate-carlos-v-18g.jpg"
     ]
   },
   {
@@ -1032,7 +1032,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/079-snickers-barra-52g.jpg"
     ]
   },
   {
@@ -1044,7 +1044,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/080-kinder-bueno-43g.jpg"
     ]
   },
   {
@@ -1056,7 +1056,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/081-lucas-muecas-chamoy.jpg"
     ]
   },
   {
@@ -1068,7 +1068,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1575224300306-1b8da36134ec?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/082-rockaleta-paleta-de-caramelo.jpg"
     ]
   },
   {
@@ -1080,7 +1080,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/083-tamborines-enchilados-50g.jpg"
     ]
   },
   {
@@ -1092,7 +1092,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": true,
     "imagenes": [
-      "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/084-ferrero-rocher-paquete-de-3.jpg"
     ]
   },
   {
@@ -1104,7 +1104,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/085-rebanada-de-pizza-pepperoni.jpg"
     ]
   },
   {
@@ -1116,7 +1116,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/086-rebanada-de-pizza-tres-quesos.jpg"
     ]
   },
   {
@@ -1128,7 +1128,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/087-torta-de-milanesa-con-queso.jpg"
     ]
   },
   {
@@ -1140,7 +1140,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/088-torta-de-jamon-y-queso-panela.jpg"
     ]
   },
   {
@@ -1152,7 +1152,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/089-burrito-de-bistec-con-queso.jpg"
     ]
   },
   {
@@ -1164,7 +1164,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/090-burrito-de-chicharron-prensado.jpg"
     ]
   },
   {
@@ -1176,7 +1176,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/091-sandwich-clasico-de-pavo.jpg"
     ]
   },
   {
@@ -1188,7 +1188,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/092-club-sandwich-triple-con-papas.jpg"
     ]
   },
   {
@@ -1200,7 +1200,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/093-orden-de-molletes-con-frijol-y-queso.jpg"
     ]
   },
   {
@@ -1212,7 +1212,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/094-hot-dog-especial-con-tocino.jpg"
     ]
   },
   {
@@ -1224,7 +1224,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/095-quesadilla-gigante-en-harina-con-bistec.jpg"
     ]
   },
   {
@@ -1236,7 +1236,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u2",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/096-orden-de-3-tacos-al-pastor.jpg"
     ]
   },
   {
@@ -1248,7 +1248,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u3",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/097-sushi-roll-california-8-piezas.jpg"
     ]
   },
   {
@@ -1260,7 +1260,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u4",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/098-hamburguesa-con-queso-y-tocino.jpg"
     ]
   },
   {
@@ -1272,7 +1272,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u5",
     "vendido": false,
     "imagenes": [
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/099-ensalada-cesar-con-pollo-asado.jpg"
     ]
   },
   {
@@ -1284,7 +1284,7 @@ export const PRODUCTOS_INICIALES: Producto[] = [
     "vendedorId": "u1",
     "vendido": true,
     "imagenes": [
-      "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=600&q=80"
+      "/images/productos/100-sincronizada-con-jamon-y-doble-queso.jpg"
     ]
   }
 ];
