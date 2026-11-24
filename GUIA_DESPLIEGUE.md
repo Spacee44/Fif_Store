@@ -909,9 +909,21 @@ Abre un *pull request* hacia `main` (GitHub muestra el enlace al hacer el `push`
 1. En https://vercel.com/new, conecta tu cuenta de GitHub e **importa el repositorio `Spacee44/Fif_Store`**.
 2. Vercel detecta **Next.js**: deja los comandos de *build* e instalación como vienen. El `postinstall` generará el cliente de Prisma.
 
-### 5.3 Variables de entorno
+> **Rama de producción: déjala en `main`.**
+>
+> - **Cómo despliega Vercel:** cada `push` a `main` actualiza el sitio público (Production). Cada `push` a otra rama, como `despliegue-vercel`, crea una versión de prueba (*Preview*) con su propia URL, del tipo `<proyecto>-git-<rama>-<cuenta>.vercel.app`, que aparece en la pestaña **Deployments**.
+> - **Primer despliegue:** Vercel lo hace al importar y usa el código de `main`. Mientras tu rama no esté unida, ese es el código anterior a la migración y su API no funcionará. Se corrige al unir el pull request de `despliegue-vercel` a `main`.
+> - **Si la rama ya estaba en GitHub antes de importar:** haz un `push` nuevo a la rama para que Vercel cree su Preview.
+> - **Cambiar la rama de producción** (no recomendado): *Settings → Environments → Production → Branch Tracking*.
 
-Antes de desplegar, en la configuración del proyecto (*Settings → Environment Variables*) agrega:
+### 5.3 Variables de entorno (en el panel de Vercel)
+
+Las variables de entorno se configuran **en el sitio de Vercel**, no en un archivo del proyecto. Es como el `.env.local` de tu computadora, pero para el servidor de Vercel. Hay dos lugares para agregarlas:
+
+- **Durante la importación (paso 5.2):** en la pantalla *Configure Project*, antes de pulsar **Deploy**, abre la sección **Environment Variables**.
+- **Después, en cualquier momento:** en https://vercel.com abre tu proyecto, ve a la pestaña **Settings** y luego a **Environment Variables**. Escribe el nombre y el valor, marca los entornos y pulsa **Save**.
+
+Agrega estas dos:
 
 | Nombre | Valor | Entornos |
 |---|---|---|
@@ -922,9 +934,9 @@ Para las versiones *preview*, lo ideal es otra base de Turso (por ejemplo `fif-s
 
 > Los cambios en las variables **solo aplican a despliegues nuevos**: después de cambiarlas, vuelve a desplegar (*Redeploy*).
 
-### 5.4 Versión de Node.js
+### 5.4 Versión de Node.js (también en el panel de Vercel)
 
-En la configuración del proyecto elige **Node.js 22.x o 24.x**. Prisma 7 no funciona con versiones anteriores a 20.19.
+En tu proyecto de Vercel, en la pestaña **Settings**, busca **Node.js Version**. Según la versión del panel está en la sección *Build and Deployment* o en *General*. Elige **22.x o 24.x**: Prisma 7 no funciona con versiones anteriores a 20.19.
 
 ### 5.5 Desplegar
 
@@ -1014,6 +1026,7 @@ Crea antes la carpeta `prisma/cambios/` y sube esos `.sql` al repositorio para t
 | `npm run lint` marca `require()` en `scripts/*.js`, `prefer-const` en `store.ts` o variables sin usar | Avisos anteriores a la migración | No bloquean el build ni Vercel; ver cómo corregirlos en el paso 3.4 |
 | El build falla con `Cannot find module '@/app/generated/prisma/client'` | No se generó el cliente | Revisa que exista el script `postinstall` en `package.json`; en local corre `npx prisma generate` |
 | El build falla con `prisma: command not found` | Vercel no encontró la CLI | Mueve `prisma` de `devDependencies` a `dependencies` |
+| En Vercel, el login da 500 y el log dice `SqliteError: unable to open database file` (`SQLITE_CANTOPEN`) | Producción sigue con el código anterior (`better-sqlite3`), porque la migración aún no se ha unido a `main` | Une la rama `despliegue-vercel` a `main` (pull request); Vercel vuelve a desplegar producción |
 | `Error: Falta la variable de entorno TURSO_DATABASE_URL` | La variable no existe en Vercel o se agregó después del despliegue | Agrégala en *Settings → Environment Variables* y vuelve a desplegar |
 | Errores de autenticación (401) al conectar con Turso | Token incorrecto, caducado o de solo lectura | Crea otro con `turso db tokens create fif-store`, actualiza `TURSO_AUTH_TOKEN` y vuelve a desplegar |
 | `no such table: productos` | La base de Turso se creó vacía (sin `--from-file`, o desde el panel web) o la URL apunta a otra base | Confirma con `turso db shell fif-store "SELECT name FROM sqlite_master WHERE type='table';"` y carga los datos con la opción A o B del paso 4.5 |
