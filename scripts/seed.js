@@ -10,7 +10,7 @@ const SQL_PATH = path.join(__dirname, '..', 'fif_store.sql');
 if (fs.existsSync(DB_PATH)) {
   try {
     fs.unlinkSync(DB_PATH);
-  } catch (e) {
+  } catch {
     console.log('No se pudo borrar BD anterior, sobrescribiendo tablas...');
   }
 }

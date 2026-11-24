@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^7.10.1",
+    "@prisma/adapter-libsql": "7.10.1",
+    "@prisma/client": "7.10.1",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^13.2.0",
-    "next": "16.4.3",
+    "next": "16.4.6",
     "pdf-lib": "^1.17.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -25,8 +27,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.4.3",
-    "prisma": "^8.0.0-rc.35",
+    "eslint-config-next": "16.4.6",
+    "prisma": "7.10.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

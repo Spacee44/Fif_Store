@@ -1,72 +1,74 @@
 import { NextResponse } from 'next/server';
-import { getDb, rowToProducto, type DbProductRow } from '@/app/lib/db';
-import { getCurrentUserId } from '@/app/lib/auth';
+import { aProducto, getPrisma } from '@/app/lib/db';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+type Contexto = { params: Promise<{ id: string }> };
+
+/** Convierte el parámetro de la URL en un id numérico (o null si no es válido). */
+async function leerId({ params }: Contexto): Promise<number | null> {
+  const { id } = await params;
+  const numero = Number(id);
+  return Number.isInteger(numero) ? numero : null;
+}
+
+const noEncontrado = () => NextResponse.json({ error: 'Producto no encontrado' }, { status: 404 });
+
+export async function GET(_request: Request, contexto: Contexto) {
   try {
-    const { id } = await params;
-    const db = getDb();
-    const row = db.prepare('SELECT * FROM productos WHERE id = ?').get(id) as DbProductRow | undefined;
+    const id = await leerId(contexto);
+    const producto = id === null ? null : await getPrisma().producto.findUnique({ where: { id } });
+    if (!producto) return noEncontrado();
 
-    if (!row) {
-      return NextResponse.json({ error: 'Producto no encontrado' }, { status: 404 });
-    }
-
-    return NextResponse.json({ producto: rowToProducto(row) });
-  } catch (error: any) {
+    return NextResponse.json({ producto: aProducto(producto) });
+  } catch (error) {
+    console.error('Error en GET /api/productos/[id]:', error);
     return NextResponse.json({ error: 'Error al consultar producto' }, { status: 500 });
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(request: Request, contexto: Contexto) {
   try {
-    const { id } = await params;
+    const id = await leerId(contexto);
+    if (id === null) return noEncontrado();
+
     const body = await request.json();
-    const db = getDb();
+    const prisma = getPrisma();
+    const existe = await prisma.producto.findUnique({ where: { id }, select: { id: true } });
+    if (!existe) return noEncontrado();
 
-    // Puede actualizar vendido o datos generales
-    if (body.vendido !== undefined) {
-      db.prepare('UPDATE productos SET vendido = ? WHERE id = ?').run(
-        body.vendido ? 1 : 0,
-        id
-      );
-    } else {
-      const { nombre, precio, categoria, descripcion, imagenes } = body;
-      const imgsJson = JSON.stringify(Array.isArray(imagenes) ? imagenes : []);
-      db.prepare(`
-        UPDATE productos
-        SET nombre = COALESCE(?, nombre),
-            precio = COALESCE(?, precio),
-            categoria = COALESCE(?, categoria),
-            descripcion = COALESCE(?, descripcion),
-            imagenes = COALESCE(?, imagenes)
-        WHERE id = ?
-      `).run(nombre, precio ? Number(precio) : null, categoria, descripcion, imgsJson, id);
-    }
+    // Puede marcar como vendido o actualizar los datos generales
+    const data =
+      body.vendido !== undefined
+        ? { vendido: body.vendido ? 1 : 0 }
+        : {
+            nombre: body.nombre ?? undefined,
+            precio: body.precio ? Number(body.precio) : undefined,
+            categoria: body.categoria ?? undefined,
+            descripcion: body.descripcion ?? undefined,
+            imagenes: Array.isArray(body.imagenes) ? JSON.stringify(body.imagenes) : undefined,
+          };
 
-    const updated = db.prepare('SELECT * FROM productos WHERE id = ?').get(id) as DbProductRow;
-    return NextResponse.json({ ok: true, producto: rowToProducto(updated) });
-  } catch (error: any) {
+    const actualizado = await prisma.producto.update({ where: { id }, data });
+    return NextResponse.json({ ok: true, producto: aProducto(actualizado) });
+  } catch (error) {
+    console.error('Error en PUT /api/productos/[id]:', error);
     return NextResponse.json({ error: 'Error al actualizar producto' }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(_request: Request, contexto: Contexto) {
   try {
-    const { id } = await params;
-    const db = getDb();
-    db.prepare('DELETE FROM productos WHERE id = ?').run(id);
+    const id = await leerId(contexto);
+    if (id !== null) {
+      const prisma = getPrisma();
+      // Primero sus favoritos, para no depender de que la BD aplique ON DELETE CASCADE
+      await prisma.$transaction([
+        prisma.favorito.deleteMany({ where: { productoId: id } }),
+        prisma.producto.deleteMany({ where: { id } }),
+      ]);
+    }
     return NextResponse.json({ ok: true });
-  } catch (error: any) {
+  } catch (error) {
+    console.error('Error en DELETE /api/productos/[id]:', error);
     return NextResponse.json({ error: 'Error al eliminar producto' }, { status: 500 });
   }
 }

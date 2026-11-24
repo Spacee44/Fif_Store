@@ -64,7 +64,7 @@ async function sincronizarConBackend() {
       fetch('/api/favoritos').catch(() => null),
     ]);
 
-    let nuevoEstado = { ...estado };
+    const nuevoEstado = { ...estado };
 
     if (resMe && resMe.ok) {
       const dataMe = await resMe.json();

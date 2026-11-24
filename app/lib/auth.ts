@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import bcrypt from 'bcryptjs';
-import { getDb, rowToUsuario, type DbUserRow } from './db';
+import { aUsuario, getPrisma } from './db';
 import { type Usuario } from './data';
 
 const SESSION_COOKIE_NAME = 'fif_session';
@@ -23,11 +23,11 @@ export async function getCurrentUser(): Promise<Usuario | null> {
   const userId = await getCurrentUserId();
   if (!userId) return null;
 
-  const db = getDb();
-  const row = db.prepare('SELECT * FROM usuarios WHERE id = ?').get(userId) as DbUserRow | undefined;
-  if (!row) return null;
-
-  return rowToUsuario(row);
+  const row = await getPrisma().usuario.findUnique({
+    where: { id: userId },
+    select: { id: true, nombre: true, carrera: true, telefono: true, correo: true },
+  });
+  return row ? aUsuario(row) : null;
 }
 
 export async function setSession(userId: string) {

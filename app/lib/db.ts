@@ -1,113 +1,66 @@
-import Database from 'better-sqlite3';
-import path from 'path';
-import fs from 'fs';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
+import {
+  PrismaClient,
+  type Producto as ProductoDb,
+  type Usuario as UsuarioDb,
+} from '@/app/generated/prisma/client';
 import { type Categoria, type Producto, type Usuario } from './data';
 
-const DB_PATH = path.join(process.cwd(), 'fif_store.db');
+// Un solo PrismaClient por proceso. En desarrollo Next.js recarga los módulos,
+// así que se guarda en globalThis para no abrir una conexión nueva en cada cambio.
+const globalParaPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-let dbInstance: Database.Database | null = null;
+/**
+ * Devuelve el cliente de Prisma conectado a Turso (producción) o al archivo
+ * local fif_store.db (desarrollo). Se crea al primer uso, no al importar el
+ * módulo, para que `next build` no necesite conectarse a la base de datos.
+ */
+export function getPrisma(): PrismaClient {
+  if (globalParaPrisma.prisma) return globalParaPrisma.prisma;
 
-export function getDb(): Database.Database {
-  if (!dbInstance) {
-    dbInstance = new Database(DB_PATH);
-    dbInstance.pragma('journal_mode = WAL');
-    dbInstance.pragma('foreign_keys = ON');
-    initSchema(dbInstance);
+  const url =
+    process.env.TURSO_DATABASE_URL ??
+    (process.env.NODE_ENV === 'production' ? undefined : 'file:./fif_store.db');
+  if (!url) {
+    throw new Error('Falta la variable de entorno TURSO_DATABASE_URL');
   }
-  return dbInstance;
+
+  const adapter = new PrismaLibSql({ url, authToken: process.env.TURSO_AUTH_TOKEN });
+  const prisma = new PrismaClient({ adapter });
+  globalParaPrisma.prisma = prisma;
+  return prisma;
 }
 
-function initSchema(db: Database.Database) {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS usuarios (
-      id TEXT PRIMARY KEY,
-      nombre TEXT NOT NULL,
-      carrera TEXT NOT NULL DEFAULT 'Ing. en Software',
-      telefono TEXT NOT NULL,
-      correo TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
+// ----- Conversión de los registros de la BD a los tipos que usa la app -----
 
-    CREATE TABLE IF NOT EXISTS productos (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nombre TEXT NOT NULL,
-      precio REAL NOT NULL,
-      categoria TEXT NOT NULL,
-      descripcion TEXT NOT NULL,
-      vendedor_id TEXT NOT NULL,
-      vendido INTEGER NOT NULL DEFAULT 0,
-      imagenes TEXT NOT NULL DEFAULT '[]',
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (vendedor_id) REFERENCES usuarios(id) ON DELETE CASCADE
-    );
-
-    CREATE TABLE IF NOT EXISTS favoritos (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      usuario_id TEXT NOT NULL,
-      producto_id INTEGER NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE(usuario_id, producto_id),
-      FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-      FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE
-    );
-
-    CREATE INDEX IF NOT EXISTS idx_productos_categoria ON productos(categoria);
-    CREATE INDEX IF NOT EXISTS idx_productos_vendedor ON productos(vendedor_id);
-    CREATE INDEX IF NOT EXISTS idx_favoritos_usuario ON favoritos(usuario_id);
-  `);
-}
-
-// Interfaces y transformaciones
-export interface DbUserRow {
-  id: string;
-  nombre: string;
-  carrera: string;
-  telefono: string;
-  correo: string;
-  password?: string;
-  created_at?: string;
-}
-
-export interface DbProductRow {
-  id: number;
-  nombre: string;
-  precio: number;
-  categoria: string;
-  descripcion: string;
-  vendedor_id: string;
-  vendido: number;
-  imagenes: string;
-  created_at?: string;
-}
-
-export function rowToProducto(row: DbProductRow): Producto {
-  let parsedImages: string[] = [];
+export function aProducto(p: ProductoDb): Producto {
+  let imagenes: string[] = [];
   try {
-    parsedImages = JSON.parse(row.imagenes);
-    if (!Array.isArray(parsedImages)) parsedImages = [];
+    const valor = JSON.parse(p.imagenes);
+    if (Array.isArray(valor)) imagenes = valor;
   } catch {
-    parsedImages = [];
+    imagenes = [];
   }
 
   return {
-    id: row.id,
-    nombre: row.nombre,
-    precio: row.precio,
-    categoria: row.categoria as Categoria,
-    descripcion: row.descripcion,
-    vendedorId: row.vendedor_id,
-    vendido: row.vendido === 1,
-    imagenes: parsedImages,
+    id: p.id,
+    nombre: p.nombre,
+    precio: p.precio,
+    categoria: p.categoria as Categoria,
+    descripcion: p.descripcion,
+    vendedorId: p.vendedorId,
+    vendido: p.vendido === 1,
+    imagenes,
   };
 }
 
-export function rowToUsuario(row: DbUserRow): Usuario {
+/** Nunca incluye la contraseña. */
+export function aUsuario(u: Pick<UsuarioDb, 'id' | 'nombre' | 'carrera' | 'telefono' | 'correo'>): Usuario {
   return {
-    id: row.id,
-    nombre: row.nombre,
-    carrera: row.carrera,
-    telefono: row.telefono,
-    correo: row.correo,
+    id: u.id,
+    nombre: u.nombre,
+    carrera: u.carrera,
+    telefono: u.telefono,
+    correo: u.correo,
   };
 }

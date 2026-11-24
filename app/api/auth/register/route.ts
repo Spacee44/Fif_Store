@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb, rowToUsuario, type DbUserRow } from '@/app/lib/db';
+import { aUsuario, getPrisma } from '@/app/lib/db';
 import { hashPassword, setSession } from '@/app/lib/auth';
 
 export async function POST(request: Request) {
@@ -30,8 +30,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const db = getDb();
-    const existing = db.prepare('SELECT id FROM usuarios WHERE LOWER(correo) = ?').get(cleanEmail);
+    const prisma = getPrisma();
+    const existing = await prisma.usuario.findUnique({ where: { correo: cleanEmail }, select: { id: true } });
     if (existing) {
       return NextResponse.json(
         { error: 'Este correo institucional ya cuenta con una cuenta registrada' },
@@ -44,21 +44,23 @@ export async function POST(request: Request) {
     const carreraFinal = carrera?.trim() || 'Ing. en Software';
     const telefonoFinal = telefono?.trim() || '4420000000';
 
-    const insert = db.prepare(`
-      INSERT INTO usuarios (id, nombre, carrera, telefono, correo, password)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `);
-
-    insert.run(newId, nombre.trim(), carreraFinal, telefonoFinal, cleanEmail, passwordHash);
-
-    const newUser = db.prepare('SELECT * FROM usuarios WHERE id = ?').get(newId) as DbUserRow;
+    const newUser = await prisma.usuario.create({
+      data: {
+        id: newId,
+        nombre: nombre.trim(),
+        carrera: carreraFinal,
+        telefono: telefonoFinal,
+        correo: cleanEmail,
+        password: passwordHash,
+      },
+    });
     await setSession(newId);
 
     return NextResponse.json({
       ok: true,
-      user: rowToUsuario(newUser),
+      user: aUsuario(newUser),
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error en /api/auth/register:', error);
     return NextResponse.json(
       { error: 'Error interno del servidor al procesar el registro' },

@@ -43,3 +43,8 @@ next-env.d.ts
 # sqlite temporary wal files
 *.db-shm
 *.db-wal
+
+# cliente generado por Prisma (se crea con `prisma generate`)
+
+/app/generated/
+

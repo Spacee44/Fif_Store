@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb, rowToUsuario, type DbUserRow } from '@/app/lib/db';
+import { aUsuario, getPrisma } from '@/app/lib/db';
 import { verifyPassword, setSession } from '@/app/lib/auth';
 
 export async function POST(request: Request) {
@@ -15,8 +15,7 @@ export async function POST(request: Request) {
     }
 
     const cleanEmail = correo.trim().toLowerCase();
-    const db = getDb();
-    const user = db.prepare('SELECT * FROM usuarios WHERE LOWER(correo) = ?').get(cleanEmail) as DbUserRow | undefined;
+    const user = await getPrisma().usuario.findUnique({ where: { correo: cleanEmail } });
 
     if (!user || !user.password) {
       return NextResponse.json(
@@ -37,9 +36,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       ok: true,
-      user: rowToUsuario(user),
+      user: aUsuario(user),
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error en /api/auth/login:', error);
     return NextResponse.json(
       { error: 'Error interno del servidor al procesar el inicio de sesión' },

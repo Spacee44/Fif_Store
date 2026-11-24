@@ -1,16 +1,23 @@
+import { unstable_rethrow } from 'next/navigation';
 import { NextResponse } from 'next/server';
-import { getDb } from '@/app/lib/db';
+import { getPrisma } from '@/app/lib/db';
 import { getCurrentUserId } from '@/app/lib/auth';
+
+async function listar(usuarioId: string) {
+  const filas = await getPrisma().favorito.findMany({
+    where: { usuarioId },
+    select: { productoId: true },
+  });
+  return filas.map((f) => f.productoId);
+}
 
 export async function GET() {
   try {
     const userId = (await getCurrentUserId()) || 'u1';
-    const db = getDb();
-    const rows = db.prepare('SELECT producto_id FROM favoritos WHERE usuario_id = ?').all(userId) as { producto_id: number }[];
-    const favoritos = rows.map((r) => r.producto_id);
-
-    return NextResponse.json({ favoritos });
-  } catch (error: any) {
+    return NextResponse.json({ favoritos: await listar(userId) });
+  } catch (error) {
+    unstable_rethrow(error); // deja pasar las señales internas de Next (p. ej. cookies() al prerenderizar)
+    console.error('Error en GET /api/favoritos:', error);
     return NextResponse.json({ error: 'Error al consultar favoritos' }, { status: 500 });
   }
 }
@@ -18,28 +25,26 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const userId = (await getCurrentUserId()) || 'u1';
-    const body = await request.json();
-    const { productoId } = body;
+    const { productoId } = await request.json();
+    const id = Number(productoId);
 
-    if (!productoId) {
+    if (!productoId || !Number.isInteger(id)) {
       return NextResponse.json({ error: 'productoId es requerido' }, { status: 400 });
     }
 
-    const db = getDb();
-    const existing = db.prepare('SELECT id FROM favoritos WHERE usuario_id = ? AND producto_id = ?').get(userId, productoId);
+    const prisma = getPrisma();
+    const clave = { usuarioId_productoId: { usuarioId: userId, productoId: id } };
+    const existente = await prisma.favorito.findUnique({ where: clave });
 
-    let esFavorito = false;
-    if (existing) {
-      db.prepare('DELETE FROM favoritos WHERE usuario_id = ? AND producto_id = ?').run(userId, productoId);
-      esFavorito = false;
+    if (existente) {
+      await prisma.favorito.delete({ where: clave });
     } else {
-      db.prepare('INSERT INTO favoritos (usuario_id, producto_id) VALUES (?, ?)').run(userId, productoId);
-      esFavorito = true;
+      await prisma.favorito.create({ data: { usuarioId: userId, productoId: id } });
     }
 
-    const rows = db.prepare('SELECT producto_id FROM favoritos WHERE usuario_id = ?').all(userId) as { producto_id: number }[];
-    return NextResponse.json({ ok: true, esFavorito, favoritos: rows.map((r) => r.producto_id) });
-  } catch (error: any) {
+    return NextResponse.json({ ok: true, esFavorito: !existente, favoritos: await listar(userId) });
+  } catch (error) {
+    console.error('Error en POST /api/favoritos:', error);
     return NextResponse.json({ error: 'Error al alternar favorito' }, { status: 500 });
   }
 }

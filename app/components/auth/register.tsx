@@ -48,7 +48,7 @@ export default function Register() {
         loginUsuario(data.user);
       }
       router.push('/feed');
-    } catch (err) {
+    } catch {
       setError('Error al comunicarse con el servidor');
       setCargando(false);
     }
