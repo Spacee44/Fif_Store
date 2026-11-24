@@ -884,13 +884,25 @@ Al correr `npm run dev`, la app usará Turso en lugar del archivo local. Borra o
 
 ### 5.1 Subir los cambios a GitHub
 
+Primero confirma que estás en la rama del paso 0:
+
+```bash
+git branch --show-current      # debe decir despliegue-vercel
+# si dice main, crea la rama ahora (se lleva tus cambios con ella):
+git switch -c despliegue-vercel
+```
+
+Luego sube los cambios:
+
 ```bash
 git add -A
 git commit -m "Migracion a Prisma y Turso para desplegar en Vercel"
 git push -u origin despliegue-vercel
 ```
 
-Abre un *pull request* hacia `main` y únelo cuando la versión de prueba (*preview*) funcione. Antes de hacer `git add -A`, revisa con `git status` que no vayas a subir `.env.local`.
+Antes de hacer `git add -A`, revisa con `git status` que no vayas a subir `.env.local`. El archivo `prisma/normalizar.sql` del paso 2.4 ya se aplicó y no hace falta subirlo; puedes borrarlo.
+
+Abre un *pull request* hacia `main` (GitHub muestra el enlace al hacer el `push`) y únelo cuando la versión de prueba (*preview*) funcione.
 
 ### 5.2 Importar el proyecto
 
@@ -1006,6 +1018,7 @@ Crea antes la carpeta `prisma/cambios/` y sube esos `.sql` al repositorio para t
 | Errores de autenticación (401) al conectar con Turso | Token incorrecto, caducado o de solo lectura | Crea otro con `turso db tokens create fif-store`, actualiza `TURSO_AUTH_TOKEN` y vuelve a desplegar |
 | `no such table: productos` | La base de Turso se creó vacía (sin `--from-file`, o desde el panel web) o la URL apunta a otra base | Confirma con `turso db shell fif-store "SELECT name FROM sqlite_master WHERE type='table';"` y carga los datos con la opción A o B del paso 4.5 |
 | `command not found: turso` | La terminal no tiene la CLI en el `PATH` | Abre una terminal nueva o usa `~/.turso/turso` |
+| `git push` responde *"src refspec despliegue-vercel does not match any"* | La rama no existe: el commit quedó en `main` | `git switch -c despliegue-vercel` y repite el `push`. Para que tu `main` local vuelva a coincidir con GitHub: `git branch -f main origin/main` |
 | Faltan publicaciones recientes en Turso | El `-wal` no se pasó a la base antes de importar | Repite el paso 4.2 y vuelve a importar (o recrea la base) |
 | Al publicar responde `413 FUNCTION_PAYLOAD_TOO_LARGE` | La petición supera 4.5 MB | Sube menos fotos o más ligeras |
 | `migrate diff` quiere reconstruir la tabla `usuarios` | No se hizo la normalización | Haz el paso 2.4 |
